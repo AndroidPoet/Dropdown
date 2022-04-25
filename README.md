@@ -149,7 +149,7 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
  ExitAnimation.SlideOutVertically
  ExitAnimation.ScaleOut
  ExitAnimation.ShrinkOut
- v.ShrinkHorizontally
+ ExitAnimation.ShrinkHorizontally
  ExitAnimation.ShrinkVertically
 ```
   
