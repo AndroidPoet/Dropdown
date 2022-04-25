@@ -1,7 +1,7 @@
-<h1 align="center">Metaphor </h1>
+<h1 align="center">Dropdown </h1>
 
 <p align="center">
-	💠Metaphor is a library that lets you implement Material's motion system animations.
+	💠A customizable jetpack compose dropdown menu with cascade and animations.
 </p>
 
 
