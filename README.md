@@ -117,7 +117,8 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
 
   
 ```
-	  
+
+
 ## Supported Animations
 
 
@@ -179,7 +180,7 @@ Fade  | SharedAxisX | SharedAxisY | SharedAxisZ |
 	  
 ElevationScale  | SlideIn(SlideOut) | SlideHorizontally | SlideVertically |
 | :---------------: | :---------------: | :---------------: | :---------------: |
-| <img src="https://user-images.githubusercontent.com/13647384/165893392-65c7a7a9-d7b6-47bb-8141-5a49aa26958b.gif" align="center" width="80%"/> | <img src="https://user-images.githubusercontent.com/13647384/165894211-ff05c4c3-4e1d-47bb-8aac-b7272ccc2750.gif" align="center" width="100%"/> | <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> |		  
+| <img src="https://user-images.githubusercontent.com/13647384/165893392-65c7a7a9-d7b6-47bb-8141-5a49aa26958b.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165894211-ff05c4c3-4e1d-47bb-8aac-b7272ccc2750.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165894765-2d0821bf-dabe-4f11-848f-f09180d4f0df.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165895557-231b55dc-1684-4b5f-b948-a640779f0eca.gif" align="center" width="100%"/> |		  
 	  
 Scale  | ExpandIn(Shrink) | ExpandHorizontally(ShrinkHorizontally) | ExpandVertically(ShrinkVertically) |
 | :---------------: | :---------------: | :---------------: | :---------------: |
@@ -193,7 +194,8 @@ This library was heavily inspired  by [ComposeCookBook](https://github.com/Gurup
 
 > A Collection on all Jetpack compose UI elements, Layouts, Widgets and Demo screens to see it's potential.
 	  
-	  
+
+
 	  
 <a href="https://www.flaticon.com/free-icons/list" title="list icons">List icons created by Freepik - Flaticon</a>
 
