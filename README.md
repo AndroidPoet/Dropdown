@@ -170,9 +170,6 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
  Easing.LinearEasing
 ```	  
 	
-
-
-## Gif uploading.... 
 	  
 Fade  | SharedAxisX | SharedAxisY | SharedAxisZ |
 | :---------------: | :---------------: | :---------------: | :---------------: |
