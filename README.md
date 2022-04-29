@@ -1,7 +1,7 @@
 <h1 align="center">Dropdown </h1>
 
 <p align="center">
-	💧A customizable jetpack compose dropdown menu with cascade and animations.
+	💧A Powerful and customizable jetpack compose dropdown menu with cascade and animations.
 	
 </p>
 
