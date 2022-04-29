@@ -173,7 +173,7 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
 	  
 Fade  | SharedAxisX | SharedAxisY | SharedAxisZ |
 | :---------------: | :---------------: | :---------------: | :---------------: |
-| <img src="https://user-images.githubusercontent.com/13647384/165891972-ec0a4239-8998-4052-9338-1daa67fc0dce.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165891266-fd51e64d-d871-4438-acb7-4a2ec43d3efd.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165892730-2e2a4c81-6196-47d0-8e12-02668ccd9d9c.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165889519-490e5162-6c20-42e5-adc6-1d22ed716d5b.gif" align="center" width="90%"/> |  	  	  
+| <img src="https://user-images.githubusercontent.com/13647384/165891972-ec0a4239-8998-4052-9338-1daa67fc0dce.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165891266-fd51e64d-d871-4438-acb7-4a2ec43d3efd.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165892730-2e2a4c81-6196-47d0-8e12-02668ccd9d9c.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165893392-65c7a7a9-d7b6-47bb-8141-5a49aa26958b.gif" align="center" width="90%"/> |  	  	  
 	  
 	  
 	  
@@ -203,6 +203,7 @@ This library was heavily inspired  by [ComposeCookBook](https://github.com/Gurup
 ## Find this repository useful? :heart:
 Support it by joining __[stargazers](https://github.com/AndroidPoet/Dropdown/stargazers)__ for this repository. :star: <br>
 Also, __[follow me](https://github.com/AndroidPoet)__ on GitHub for cool projects! 🤩
+
 
 
 
