@@ -40,10 +40,18 @@ dependencies {
 ```
 	  
 <p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/165008192-56ec4075-3379-49ab-8912-954c0755b704.gif" width="32%"/>
+<img src="https://user-images.githubusercontent.com/13647384/165883253-8e81edaf-0a72-42a4-9a50-bed930e8828f.gif" width="32%"/>
 
 </p>	  
 	  
+	  
+	  
+<p align="center">
+<img src="https://user-images.githubusercontent.com/13647384/165008192-56ec4075-3379-49ab-8912-954c0755b704.gif" width="32%"/>
+
+</p>	  
+
+
 ### Create Menu Builder
 Create an instance of the `Menu Builder`.
 ```kotlin  
@@ -164,6 +172,8 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
 ```	  
 	  
 	  
+  
+[Demo with ](https://github.com/AndroidPoet/Dropdown/blob/master/app/src/main/java/com/androidpoet/cascademenucompose/MainActivity.kt)
 	  
 ## Inspiration
 This library was heavily inspired  by [ComposeCookBook](https://github.com/Gurupreet/ComposeCookBook).<br>
