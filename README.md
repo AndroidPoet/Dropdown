@@ -119,6 +119,7 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
 ```
 
 
+
 ## Supported Animations
 
 
@@ -184,7 +185,7 @@ ElevationScale  | SlideIn(SlideOut) | SlideHorizontally | SlideVertically |
 	  
 Scale  | ExpandIn(Shrink) | ExpandHorizontally(ShrinkHorizontally) | ExpandVertically(ShrinkVertically) |
 | :---------------: | :---------------: | :---------------: | :---------------: |
-| <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> |		  
+| <img src="https://user-images.githubusercontent.com/13647384/165896166-7d62bb01-2701-4c24-a8b0-9244409f30ec.gif" align="center" width="100%"/> | <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> |		  
 	  
   
 [Demo with ](https://github.com/AndroidPoet/Dropdown/blob/master/app/src/main/java/com/androidpoet/cascademenucompose/MainActivity.kt)
