@@ -44,12 +44,7 @@ dependencies {
 
 </p>	  
 	  
-	  
-	  
-<p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/165008192-56ec4075-3379-49ab-8912-954c0755b704.gif" width="32%"/>
 
-</p>	  
 
 
 ### Create Menu Builder
@@ -171,9 +166,21 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
  Easing.LinearEasing
 ```	  
 	  
+
+Fade  | SharedAxisX | SharedAxisY | SharedAxisZBackward |
+| :---------------: | :---------------: | :---------------: | :---------------: |
+| <img src="" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165883253-8e81edaf-0a72-42a4-9a50-bed930e8828f.gif" align="center" width="80%"/> | <img src="" align="center" width="100%"/> |	  
+	  
+ElevationScale  | SlideIn(SlideOut) | SlideHorizontally | SlideVertically |
+| :---------------: | :---------------: | :---------------: | :---------------: |
+| <img src="https://user-images.githubusercontent.com/13647384/165008192-56ec4075-3379-49ab-8912-954c0755b704.gif" align="center" width="80%"/> | <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> |		  
+	  
+Scale  | ExpandIn(Shrink) | ExpandHorizontally(ShrinkHorizontally) | ExpandVertically(ShrinkVertically) |
+| :---------------: | :---------------: | :---------------: | :---------------: |
+| <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> | <img src="" align="center" width="100%"/> |		  
 	  
   
-[Demo ](https://github.com/AndroidPoet/Dropdown/blob/master/app/src/main/java/com/androidpoet/cascademenucompose/MainActivity.kt)
+[Demo with ](https://github.com/AndroidPoet/Dropdown/blob/master/app/src/main/java/com/androidpoet/cascademenucompose/MainActivity.kt)
 	  
 ## Inspiration
 This library was heavily inspired  by [ComposeCookBook](https://github.com/Gurupreet/ComposeCookBook).<br>
