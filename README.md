@@ -36,7 +36,7 @@ Add the dependency below to your **module**'s `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("io.github.androidpoet:dropdown:1.0.1")
+    implementation("io.github.androidpoet:dropdown:1.0.0")
 }
 ```
 
