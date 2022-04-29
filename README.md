@@ -165,12 +165,15 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
  Easing.FastOutLinearInEasing
  Easing.LinearEasing
 ```	  
-	  
+	
+
 ## Gif uploading.... 
 	  
 Fade  | SharedAxisX | SharedAxisY | SharedAxisZ |
 | :---------------: | :---------------: | :---------------: | :---------------: |
-| <img src="https://user-images.githubusercontent.com/13647384/165888284-6fbfb8c6-e8c7-43ab-a97f-420e75381d0b.gif" align="center" width="80%"/> | <img src="https://user-images.githubusercontent.com/13647384/165883253-8e81edaf-0a72-42a4-9a50-bed930e8828f.gif" align="center" width="80%"/> | <img src="" align="center" width="100%"/> |	  
+| <img src="https://user-images.githubusercontent.com/13647384/165888284-6fbfb8c6-e8c7-43ab-a97f-420e75381d0b.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165883253-8e81edaf-0a72-42a4-9a50-bed930e8828f.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165889212-3154f5db-ab21-49fb-99d6-617852ac72a7.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165889519-490e5162-6c20-42e5-adc6-1d22ed716d5b.gif" align="center" width="90%"/> |  	  	  
+	  
+	  
 	  
 ElevationScale  | SlideIn(SlideOut) | SlideHorizontally | SlideVertically |
 | :---------------: | :---------------: | :---------------: | :---------------: |
@@ -191,6 +194,7 @@ This library was heavily inspired  by [ComposeCookBook](https://github.com/Gurup
 	  
 	  
 <a href="https://www.flaticon.com/free-icons/list" title="list icons">List icons created by Freepik - Flaticon</a>
+
 
 
 
