@@ -208,8 +208,8 @@ Also, __[follow me](https://github.com/AndroidPoet)__ on GitHub for cool project
 
 
 
-
-    # License
+# License
+ 
 ```xml
 Copyright 2022 AndroidPoet (Ranbir Singh)
 
