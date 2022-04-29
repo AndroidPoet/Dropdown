@@ -184,13 +184,13 @@ ElevationScale  | SlideIn(SlideOut) | SlideHorizontally | SlideVertically |
 | :---------------: | :---------------: | :---------------: | :---------------: |
 | <img src="https://user-images.githubusercontent.com/13647384/165893392-65c7a7a9-d7b6-47bb-8141-5a49aa26958b.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165894211-ff05c4c3-4e1d-47bb-8aac-b7272ccc2750.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165894765-2d0821bf-dabe-4f11-848f-f09180d4f0df.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165895557-231b55dc-1684-4b5f-b948-a640779f0eca.gif" align="center" width="100%"/> |		  
 	  
-Scale  | ExpandIn(Shrink) | ExpandHorizontally(ShrinkHorizontally) | ExpandVertically(ShrinkVertically) |
+   Scale| Expand | Expand Horizontally | Expand Vertically |
 | :---------------: | :---------------: | :---------------: | :---------------: |
-| <img src="https://user-images.githubusercontent.com/13647384/165896166-7d62bb01-2701-4c24-a8b0-9244409f30ec.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165896619-d8aef09a-deea-4e75-926b-446caa3ad677.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165897083-cc5789aa-c086-40c4-903f-6188099fdae8.gif" align="center" width="100%"/> | <img src="" align="center" width="100%"/> |		  
+| <img src="https://user-images.githubusercontent.com/13647384/165896166-7d62bb01-2701-4c24-a8b0-9244409f30ec.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165896619-d8aef09a-deea-4e75-926b-446caa3ad677.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165897083-cc5789aa-c086-40c4-903f-6188099fdae8.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165897576-304d84ea-bb2d-4fea-a110-e4ac77eccac2.gif" align="center" width="100%"/> |		  
 	  
  
 
-[Demo with ](https://github.com/AndroidPoet/Dropdown/blob/master/app/src/main/java/com/androidpoet/cascademenucompose/MainActivity.kt)
+[Demo with Snackbar](https://github.com/AndroidPoet/Dropdown/blob/master/app/src/main/java/com/androidpoet/cascademenucompose/MainActivity.kt)
 	  
 ## Inspiration
 This library was heavily inspired  by [ComposeCookBook](https://github.com/Gurupreet/ComposeCookBook).<br>
@@ -208,6 +208,7 @@ This library was heavily inspired  by [ComposeCookBook](https://github.com/Gurup
 ## Find this repository useful? :heart:
 Support it by joining __[stargazers](https://github.com/AndroidPoet/Dropdown/stargazers)__ for this repository. :star: <br>
 Also, __[follow me](https://github.com/AndroidPoet)__ on GitHub for cool projects! 🤩
+
 
 
 
