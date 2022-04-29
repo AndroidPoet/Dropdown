@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import com.androidpoet.cascademenucompose.ui.theme.CascadeMenuComposeTheme
 import com.androidpoet.cascademenucompose.ui.theme.Teal200
-import com.androidpoet.cascademenucompose.ui.theme.White
 import com.androidpoet.dropdown.Dropdown
 import com.androidpoet.dropdown.Easing
 import com.androidpoet.dropdown.EnterAnimation
@@ -129,13 +128,13 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
 
     isOpen = isOpen,
     menu = menu,
-    colors = dropDownMenuColors(Teal200, White),
+    colors = dropDownMenuColors(Teal200, Color.Black),
     onItemSelected = itemSelected,
     onDismiss = { setIsOpen(false) },
     offset = DpOffset(8.dp, 0.dp),
-    enter = EnterAnimation.ElevationScale,
-    exit = ExitAnimation.ElevationScale,
-    easing = Easing.FastOutSlowInEasing,
+    enter = EnterAnimation.ExpandVertically,
+    exit = ExitAnimation.ShrinkVertically,
+    easing = Easing.FastOutLinearInEasing,
     enterDuration = 400,
     exitDuration = 400
 

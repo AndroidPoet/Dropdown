@@ -1,7 +1,8 @@
-<h1 align="center">Metaphor </h1>
+<h1 align="center">Dropdown </h1>
 
 <p align="center">
-	💠Metaphor is a library that lets you implement Material's motion system animations.
+	💧A Powerful and customizable jetpack compose dropdown menu with cascade and animations.
+
 </p>
 
 
@@ -11,421 +12,217 @@
   <a href="https://devlibrary.withgoogle.com/authors/AndroidPoet"><img alt="Google" src="https://user-images.githubusercontent.com/13647384/162663007-d911f6ce-ac1b-4754-a63b-eadbef38087f.svg"/></a>
 <br>
 	<br>
-  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
-  <a href="https://medium.com/@androidpoet/metaphor-make-your-app-shine-with-material-motion-animations-73e5ffc698b4"><img alt="Medium"       src="https://user-images.githubusercontent.com/13647384/162663072-9d93cb76-1af0-49fc-b003-372e536ae171.svg"/></a>
+  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/>
   <a href="https://github.com/AndroidPoet"><img alt="Profile" src="https://user-images.githubusercontent.com/13647384/162662962-82e3c1eb-baf8-4e21-ad26-d4c4e3c31e44.svg"/>
-    <a href="https://androidweekly.net/issues/issue-509"><img alt="Android Weekly" src="https://androidweekly.net/issues/issue-509/badge"/></a>	
-	</a>
 
-
-
-<p align="center">
-<a href="https://mailchi.mp/kotlinweekly/kotlin-weekly-295"><img alt="Kotlin Weekly" src="https://img.shields.io/badge/Featured%20in%20kotlinweekly-Issue%20%20295-blue.svg"/></a>
 
 </p> <br>
 
 
 
 
-
-
-
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/13647384/163097135-a2de3617-e0b8-4629-82e2-cb5d1110c051.svg" />
+	<img src="https://user-images.githubusercontent.com/13647384/165006800-c18b3de1-b1d8-41c2-99f1-792561629a2d.png"  width="30%"/>
 
-</p> <br>
+</p> 
 
-<p align="center">
-
-</p>
-
-## Who's using Metaphor?
-**👉 [Check out who's using Metaphor](/usecases.md)**
+## Who's using Dropdown?
+**👉 [Check out who's using Dropdown](/usecases.md)**
 
 ## Include in your project
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.androidpoet/metaphor.svg?label=Maven%20Central)](https://search.maven.org/artifact/io.github.androidpoet/metaphor)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.androidpoet/dropdown.svg?label=Maven%20Central)](https://search.maven.org/artifact/io.github.androidpoet/dropdown)
 
 ### Gradle
 Add the dependency below to your **module**'s `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("io.github.androidpoet:metaphor:1.1.5")
+    implementation("io.github.androidpoet:dropdown:1.0.0")
 }
-```
-Metaphor provides support for all four motion patterns
-defined in the Material spec.
-
-1.  [Container transform](#container-transform)
-2.  [Shared axis](#shared-axis)
-3.  [Fade through](#fade-through)
-4.  [Fade](#fade)
-
-
-
-<p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/157047014-2cf69797-090f-41a3-97e9-a1aeda55307a.gif" width="32%"/>
-
-</p>
-
-## Container transform How to use In Fragments
-
-```kotlin
-
-//Start Fragments onclick// 
-val extras = FragmentNavigatorExtras(view to item.pos.toString())
-val action = ArtistListFragmentDirections.navToCharacterDetailFragment(item)
-findNavController().navigate(action, extras)
-
-//start fragment 
-// inside on onViewCreated  
-override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    hold() // this is function is really important for the "ContainerTransform" it will hold the currant fragment view
-
-}
-
-
-//destination fragment		
-
-// inside on onViewCreated  
-override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    val metaphor = MetaphorFragment.Builder(fragment)
-        .setExitDuration(300)
-        .setView(view)
-        .setTransitionName(args.data.pos.toString())
-        .setExitAnimation(MetaphorAnimation.ContainerTransform)
-        .setMotion(MaterialArcMotion())
-        .build()
-    metaphor.animate()
-}
-
 ```
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/157047720-d6dcb0ab-3fe4-4078-84f3-f3be70cbb0f4.gif" width="32%"/>
+<img src="https://user-images.githubusercontent.com/13647384/165891266-fd51e64d-d871-4438-acb7-4a2ec43d3efd.gif" width="32%"/>
 
-</p>
-
-## Container transform How to use in views
-
-```kotlin
-//call this method with startView and add end view set Animation you want to perform
+</p>	  
 
 
-viewBinding.fabDetail.setOnClickListener {
-    val meta = MetaphorView.Builder(viewBinding.fabDetail)
-        .setDuration(300)
-        .setEndView(viewBinding.controls)
-        .setMetaphorAnimation(MetaphorAnimation.ContainerTransform)
-        .setMotion(MaterialArcMotion())
-        .build()
-    meta.animate()
+
+
+### Create Menu Builder
+Create an instance of the `Menu Builder`.
+```kotlin  
+	    
+fun getMenu(): MenuItem<String> {
+  val menu = dropDownMenu<String> {
+    item("about", "About") {
+      icon(Icons.TwoTone.Language)
+    }
+    item("copy", "Copy") {
+      icon(Icons.TwoTone.FileCopy)
+    }
+    item("share", "Share") {
+      icon(Icons.TwoTone.Share)
+      item("to_clipboard", "To clipboard") {
+        item("pdf", "PDF")
+        item("epub", "EPUB")
+        item("web_page", "Web page")
+        item("microsoft_word", "Microsoft word")
+      }
+      item("as_a_file", "As a file") {
+        item("pdf", "PDF")
+        item("epub", "EPUB")
+        item("web_page", "Web page")
+        item("microsoft_word", "Microsoft word")
+      }
+    }
+    item("remove", "Remove") {
+      icon(Icons.TwoTone.DeleteSweep)
+      item("yep", "Yep") {
+        icon(Icons.TwoTone.Done)
+      }
+      item("go_back", "Go back") {
+        icon(Icons.TwoTone.Close)
+      }
+    }
+  }
+  return menu
 }
-
-
-
+	  
+	  
 ```
-
-
-
-
-<p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/157048740-76908bb0-0937-4a33-9759-894d389a46b1.gif" width="32%"/>
-
-</p>
-
-## Shared axis How to use In Fragments
-
-
-```kotlin
-
-//start fragment 
-
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    // FadeThrough inside fragment
-
-    val metaphor = MetaphorFragment.Builder(fragment)
-        .setEnterDuration(300)
-        .setEnterAnimation(MetaphorAnimation.SharedAxisXForward)
-        .build()
-    metaphor.animate()
-}
-
-//destination fragment		
-
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    // FadeThrough inside fragment
-
-    val metaphor = MetaphorFragment.Builder(fragment)
-        .setEnterDuration(300)
-        .setEnterAnimation(MetaphorAnimation.SharedAxisXForward)
-        .build()
-    metaphor.animate()
-}
-
-
-```
-
-<p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/157049004-82bd3875-f0a6-4853-98f4-ad2d166d1259.gif" width="32%"/>
-
-</p>
-
-## Shared axis How to use in views
-
-```kotlin
-//call this method with startView and add end view set Animation you want to perform
-
-viewBinding.fabDetail.setOnClickListener {
-    val meta = MetaphorView.Builder(viewBinding.fabDetail)
-        .setDuration(300)
-        .setEndView(viewBinding.controls)
-        .setMetaphorAnimation(MetaphorAnimation.SharedAxisXForward)
-        .build()
-    meta.animate()
-}
-
-
-
-```
-
-
-<p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/157048740-76908bb0-0937-4a33-9759-894d389a46b1.gif" width="32%"/>
-
-</p>
-
-## Fade through How to use In Fragments
-
-
-```kotlin
-
-//start fragment 
-
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    // FadeThrough inside fragment
-
-    val metaphor = MetaphorFragment.Builder(fragment)
-        .setEnterDuration(300)
-        .setEnterAnimation(MetaphorAnimation.FadeThrough)
-        .build()
-    metaphor.animate()
-}
-
-//destination fragment		
-
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    // FadeThrough inside fragment
-
-    val metaphor = MetaphorFragment.Builder(fragment)
-        .setEnterDuration(300)
-        .setEnterAnimation(MetaphorAnimation.FadeThrough)
-        .build()
-    metaphor.animate()
-}
-
-
-```
-
-<p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/157051396-9eaa6437-5c86-4fd8-abba-00b0ebafac55.gif" width="32%"/>
-
-</p>
-
-## Fade through How to use in views
-
-
-```kotlin
-
-//call this method with startView and add end view set Animation you want to perform
-
-
-viewBinding.fabDetail.setOnClickListener {
-    val meta = MetaphorView.Builder(viewBinding.fabDetail)
-        .setDuration(300)
-        .setEndView(viewBinding.controls)
-        .setMetaphorAnimation(MetaphorAnimation.FadeThrough)
-        .build()
-    meta.animate()
-}
-
-
-```
-
-
-
-
-<p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/157051144-645ebfed-a388-4c5c-a43d-d7c2f647ffbd.gif" width="32%"/>
-
-</p>
-
-## Fade  How to use In Fragments
-
-
-```kotlin
-
-//start fragment 
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    // FadeThrough inside fragment
-
-    val metaphor = MetaphorFragment.Builder(fragment)
-        .setEnterDuration(300)
-        .setEnterAnimation(MetaphorAnimation.MaterialFade)
-        .build()
-    metaphor.animate()
-}
-
-//destination fragment		
-
-override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    // FadeThrough inside fragment
-
-    val metaphor = MetaphorFragment.Builder(fragment)
-        .setEnterDuration(300)
-        .setEnterAnimation(MetaphorAnimation.Fade)
-        .build()
-    metaphor.animate()
-}
-
-
-```
-
-<p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/157052869-9e124cef-0b3e-416b-a577-9d515e76d428.gif" width="32%"/>
-
-</p>
-
-## Fade  How to use in views
-
-
-```kotlin
-
-//call this method with startView and add end view set Animation you want to perform
-
-viewBinding.fabDetail.setOnClickListener {
-    val meta = MetaphorView.Builder(viewBinding.fabDetail)
-        .setDuration(300)
-        .setEndView(viewBinding.controls)
-        .setMetaphorAnimation(MetaphorAnimation.Fade)
-
-        .build()
-    meta.animate()
-}
-
-
-
+### Create Dropdown menu
+Create an instance of the `Dropdown menu`.
+
+```kotlin  	  
+@ExperimentalAnimationApi
+@Composable
+fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (String) -> Unit) {
+  val menu = getMenu()
+  Dropdown(
+
+    isOpen = isOpen,
+    menu = menu,
+    colors = dropDownMenuColors(Teal200, White),
+    onItemSelected = itemSelected,
+    onDismiss = { setIsOpen(false) },
+    offset = DpOffset(8.dp, 0.dp),
+    enter = EnterAnimation.ElevationScale,
+    exit = ExitAnimation.ElevationScale,
+    easing = Easing.FastOutSlowInEasing,
+    enterDuration = 400,
+    exitDuration = 400
+
+  )
+}	  
+
+  
 ```
 
 
 
 ## Supported Animations
 
-```kotlin
-MetaphorAnimation.None
-MetaphorAnimation.ContainerTransform
-MetaphorAnimation.FadeThrough
-MetaphorAnimation.Fade
-MetaphorAnimation.SharedAxisXForward
-MetaphorAnimation.SharedAxisYForward
-MetaphorAnimation.SharedAxisZForward
-MetaphorAnimation.SharedAxisXBackward
-MetaphorAnimation.SharedAxisYBackward
-MetaphorAnimation.SharedAxisZBackward
-MetaphorAnimation.ElevationScaleGrow
-MetaphorAnimation.ElevationScale
 
+## Enter Animations
+
+```kotlin
+ EnterAnimation.FadeIn
+ EnterAnimation.SharedAxisXForward
+ EnterAnimation.SharedAxisYForward
+ EnterAnimation.SharedAxisZForward
+ EnterAnimation.ElevationScale
+ EnterAnimation.SlideIn
+ EnterAnimation.SlideInHorizontally
+ EnterAnimation.SlideInVertically
+ EnterAnimation.ScaleIn
+ EnterAnimation.ExpandIn
+ EnterAnimation.ExpandHorizontally
+ EnterAnimation.ExpandVertically
 ```
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Create Metaphor Fragment with Kotlin DSL
-We can also create an instance of the MetaphorFragment with the Kotlin DSL.
-
-
+## Exit Animations
 
 ```kotlin
-  val meta = metaphorFragment(this) {
-    setEnterAnimation(MetaphorAnimation.Fade)
-    setView(view)
-    build()
-}
-meta.animate()
-
-```
-
-### Create Metaphor View with Kotlin DSL
-We can also create an instance of the MetaphorView with the Kotlin DSL.
-
-
-
-```kotlin
-val meta = metaphorView(it) {
-    setDuration(300)
-    setEndView(viewBinding.controls)
-    setMetaphorAnimation(MetaphorAnimation.Fade)
-    setMotion(MaterialArcMotion())
-    build()
-}
-
-meta.animate()
-
+ ExitAnimation.FadeOut
+ ExitAnimation.SharedAxisXBackward
+ ExitAnimation.SharedAxisYBackward
+ ExitAnimation.SharedAxisZBackward
+ ExitAnimation.ElevationScale
+ ExitAnimation.SlideOut
+ ExitAnimation.SlideOutHorizontally
+ ExitAnimation.SlideOutVertically
+ ExitAnimation.ScaleOut
+ ExitAnimation.ShrinkOut
+ ExitAnimation.ShrinkHorizontally
+ ExitAnimation.ShrinkVertically
 ```
 
 
+## Easing
+
+```kotlin
+ Easing.FastOutSlowInEasing
+Easing.LinearOutSlowInEasing
+Easing.FastOutLinearInEasing
+Easing.LinearEasing
+```
 
 
-<p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/157848865-d85ff703-0cac-4930-a02d-69b277df7ca4.png" width="80%"/>
-
-</p>
-
+Fade  | SharedAxisX | SharedAxisY | SharedAxisZ |
+| :---------------: | :---------------: | :---------------: | :---------------: |
+| <img src="https://user-images.githubusercontent.com/13647384/165891972-ec0a4239-8998-4052-9338-1daa67fc0dce.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165891266-fd51e64d-d871-4438-acb7-4a2ec43d3efd.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165892730-2e2a4c81-6196-47d0-8e12-02668ccd9d9c.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165893392-65c7a7a9-d7b6-47bb-8141-5a49aa26958b.gif" align="center" width="90%"/> |
 
 
 
+ElevationScale  | SlideIn(SlideOut) | SlideHorizontally | SlideVertically |
+| :---------------: | :---------------: | :---------------: | :---------------: |
+| <img src="https://user-images.githubusercontent.com/13647384/165893392-65c7a7a9-d7b6-47bb-8141-5a49aa26958b.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165894211-ff05c4c3-4e1d-47bb-8aac-b7272ccc2750.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165894765-2d0821bf-dabe-4f11-848f-f09180d4f0df.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165895557-231b55dc-1684-4b5f-b948-a640779f0eca.gif" align="center" width="100%"/> |
 
-images credit:https://unsplash.com/
+Scale| Expand | Expand Horizontally | Expand Vertically |
+| :---------------: | :---------------: | :---------------: | :---------------: |
+| <img src="https://user-images.githubusercontent.com/13647384/165896166-7d62bb01-2701-4c24-a8b0-9244409f30ec.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165896619-d8aef09a-deea-4e75-926b-446caa3ad677.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165897083-cc5789aa-c086-40c4-903f-6188099fdae8.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165897576-304d84ea-bb2d-4fea-a110-e4ac77eccac2.gif" align="center" width="100%"/> |
+
+
+
+[Demo with Snackbar](https://github.com/AndroidPoet/Dropdown/blob/master/app/src/main/java/com/androidpoet/cascademenucompose/MainActivity.kt)
+
+## Inspiration
+This library was heavily inspired  by [ComposeCookBook](https://github.com/Gurupreet/ComposeCookBook).<br>
+
+> A Collection on all Jetpack compose UI elements, Layouts, Widgets and Demo screens to see it's potential.
+
+
+
+
+<a href="https://www.flaticon.com/free-icons/list" title="list icons">List icons created by Freepik - Flaticon</a>
+
+
 
 
 ## Find this repository useful? :heart:
-Support it by joining __[stargazers](https://github.com/AndroidPoet/Metaphor/stargazers)__ for this repository. :star: <br>
+Support it by joining __[stargazers](https://github.com/AndroidPoet/Dropdown/stargazers)__ for this repository. :star: <br>
 Also, __[follow me](https://github.com/AndroidPoet)__ on GitHub for cool projects! 🤩
 
 
-# License
+
+
+
+    # License
 ```xml
 Copyright 2022 AndroidPoet (Ranbir Singh)
 
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-    http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+        limitations under the License.
 ```
