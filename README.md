@@ -19,6 +19,7 @@
 </p> <br>
 
 
+
 <p align="center">
 	<img src="https://user-images.githubusercontent.com/13647384/165006800-c18b3de1-b1d8-41c2-99f1-792561629a2d.png"  width="30%"/>
 
@@ -40,7 +41,7 @@ dependencies {
 ```
 	  
 <p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/165883253-8e81edaf-0a72-42a4-9a50-bed930e8828f.gif" width="32%"/>
+<img src="https://user-images.githubusercontent.com/13647384/165891266-fd51e64d-d871-4438-acb7-4a2ec43d3efd.gif" width="32%"/>
 
 </p>	  
 	  
