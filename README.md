@@ -168,11 +168,12 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
 ```	  
 	
 
+
 ## Gif uploading.... 
 	  
 Fade  | SharedAxisX | SharedAxisY | SharedAxisZ |
 | :---------------: | :---------------: | :---------------: | :---------------: |
-| <img src="https://user-images.githubusercontent.com/13647384/165888284-6fbfb8c6-e8c7-43ab-a97f-420e75381d0b.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165883253-8e81edaf-0a72-42a4-9a50-bed930e8828f.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165889212-3154f5db-ab21-49fb-99d6-617852ac72a7.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165889519-490e5162-6c20-42e5-adc6-1d22ed716d5b.gif" align="center" width="90%"/> |  	  	  
+| <img src="https://user-images.githubusercontent.com/13647384/165891972-ec0a4239-8998-4052-9338-1daa67fc0dce.gif" align="center" width="100%"/> | <img src="https://user-images.githubusercontent.com/13647384/165883253-8e81edaf-0a72-42a4-9a50-bed930e8828f.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165889212-3154f5db-ab21-49fb-99d6-617852ac72a7.gif" align="center" width="90%"/> | <img src="https://user-images.githubusercontent.com/13647384/165889519-490e5162-6c20-42e5-adc6-1d22ed716d5b.gif" align="center" width="90%"/> |  	  	  
 	  
 	  
 	  
