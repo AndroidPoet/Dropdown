@@ -37,7 +37,7 @@ Add the dependency below to your **module**'s `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("io.github.androidpoet:dropdown:1.0.0")
+    implementation("io.github.androidpoet:dropdown:1.0.1")
 }
 ```
 
@@ -210,7 +210,7 @@ Also, __[follow me](https://github.com/AndroidPoet)__ on GitHub for cool project
 
 
 
-    # License
+# License
 ```xml
 Copyright 2022 AndroidPoet (Ranbir Singh)
 
