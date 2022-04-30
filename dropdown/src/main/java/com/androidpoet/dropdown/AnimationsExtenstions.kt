@@ -42,7 +42,7 @@ internal fun getMetaphorEnterAnimation(
         animationSpec = tween(
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         ),
 
       )
@@ -53,13 +53,13 @@ internal fun getMetaphorEnterAnimation(
         animationSpec = tween(
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       ) + fadeIn(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         ),
 
       )
@@ -71,13 +71,13 @@ internal fun getMetaphorEnterAnimation(
         animationSpec = tween(
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       ) + fadeIn(
         animationSpec = tween(
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -88,13 +88,13 @@ internal fun getMetaphorEnterAnimation(
         animationSpec = tween(
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       ) + scaleIn(
         animationSpec = tween(
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -104,13 +104,13 @@ internal fun getMetaphorEnterAnimation(
         animationSpec = tween(
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       ) + scaleIn(
         animationSpec = tween(
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -121,7 +121,7 @@ internal fun getMetaphorEnterAnimation(
 
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
 
         ),
         initialOffset = { fullSize ->
@@ -135,12 +135,12 @@ internal fun getMetaphorEnterAnimation(
     }
 
     EnterAnimation.SlideInHorizontally -> {
-      return slideInVertically(
+      return slideInHorizontally(
         animationSpec = tween(
 
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
 
         )
 
@@ -153,7 +153,7 @@ internal fun getMetaphorEnterAnimation(
 
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
 
         )
 
@@ -166,7 +166,7 @@ internal fun getMetaphorEnterAnimation(
 
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
 
         )
 
@@ -179,7 +179,7 @@ internal fun getMetaphorEnterAnimation(
 
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
 
         )
 
@@ -192,7 +192,7 @@ internal fun getMetaphorEnterAnimation(
 
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
 
         )
 
@@ -205,7 +205,7 @@ internal fun getMetaphorEnterAnimation(
 
           durationMillis = animationProp.enterDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
 
         )
 
@@ -230,7 +230,7 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -240,13 +240,13 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       ) + fadeOut(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -256,13 +256,13 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       ) + fadeOut(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -273,13 +273,13 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       ) + scaleOut(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -289,13 +289,13 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       ) + scaleOut(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -313,7 +313,7 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -323,7 +323,7 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -332,7 +332,7 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -342,7 +342,7 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -352,7 +352,7 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -362,7 +362,7 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -372,7 +372,7 @@ internal fun getMetaphorExitAnimation(
         animationSpec = tween(
           durationMillis = animationProp.exitDuration,
           delayMillis = animationProp.delay,
-          easing = getMetaphorEasing(animationProp.easing)
+          easing = getEasing(animationProp.easing)
         )
       )
     }
@@ -383,7 +383,7 @@ internal fun getMetaphorExitAnimation(
 @OptIn(ExperimentalAnimationApi::class)
 @JvmSynthetic
 @PublishedApi
-internal fun getMetaphorEasing(enterAnimation: com.androidpoet.dropdown.Easing): Easing {
+internal fun getEasing(enterAnimation: com.androidpoet.dropdown.Easing): Easing {
 
   when (enterAnimation) {
 

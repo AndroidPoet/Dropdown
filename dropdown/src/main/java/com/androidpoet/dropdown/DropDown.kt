@@ -71,6 +71,7 @@ public fun <T : Any> Dropdown(
   onItemSelected: (T) -> Unit,
   onDismiss: () -> Unit,
 ) {
+
   DropdownMenu(
     modifier = modifier
       .width(MAX_WIDTH)
@@ -79,6 +80,7 @@ public fun <T : Any> Dropdown(
     onDismissRequest = onDismiss,
     offset = offset
   ) {
+
     val state by remember { mutableStateOf(MenuState(menu)) }
     AnimatedContent(
       targetState = state.currentMenuItem,
