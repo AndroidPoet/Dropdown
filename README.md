@@ -21,8 +21,9 @@
 
 
 
+
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/13647384/165006800-c18b3de1-b1d8-41c2-99f1-792561629a2d.png"  width="30%"/>
+	<img src="https://user-images.githubusercontent.com/13647384/166132988-da60fd52-7b1d-48c4-b944-e6c20a8cb619.png"  width="70%"/>
 
 </p> 
 
