@@ -205,7 +205,7 @@ This library was heavily inspired  by [ComposeCookBook](https://github.com/Gurup
 
 ## Find this repository useful? :heart:
 Support it by joining __[stargazers](https://github.com/AndroidPoet/Dropdown/stargazers)__ for this repository. :star: <br>
-Also, __[follow me](https://github.com/AndroidPoet)__ on GitHub for cool projects! 🤩
+Also, __[follow me](https://github.com/AndroidPoet)__ on GitHub for more cool projects! 🤩
 
 <a href="https://www.buymeacoffee.com/AndroidPoet" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
 
