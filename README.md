@@ -20,6 +20,7 @@
 
 
 
+=
 
 
 <p align="center">
@@ -43,7 +44,7 @@ dependencies {
 ```
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/13647384/165891266-fd51e64d-d871-4438-acb7-4a2ec43d3efd.gif" width="32%"/>
+<img src="https://user-images.githubusercontent.com/13647384/166186269-091efb42-a143-4ccd-b9c4-0e0c4748c56e.gif" width="20%"/>
 
 </p>	  
 
