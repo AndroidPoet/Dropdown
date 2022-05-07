@@ -165,7 +165,7 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
 ## Easing
 
 ```kotlin
- Easing.FastOutSlowInEasing
+Easing.FastOutSlowInEasing
 Easing.LinearOutSlowInEasing
 Easing.FastOutLinearInEasing
 Easing.LinearEasing
