@@ -1,7 +1,7 @@
 <h1 align="center">Dropdown </h1>
 
 <p align="center">
-	💧A Powerful and customizable Jetpack Compose dropdown menu with cascade and animations.
+	💧A Powerful and customizable Compose Multiplatform dropdown menu with cascade and animations.
 
 </p>
 
@@ -38,7 +38,7 @@ Add the dependency below to your **module**'s `build.gradle` file:
 
 ```gradle
 dependencies {
-    implementation("io.github.androidpoet:dropdown:1.0.1")
+    implementation("io.github.androidpoet:dropdown:$version"")
 }
 ```
 
@@ -53,44 +53,44 @@ dependencies {
 ### Create Menu Builder
 Create an instance of the `Menu Builder`.
 ```kotlin  
-	    
+
 fun getMenu(): MenuItem<String> {
-  val menu = dropDownMenu<String> {
-    item("about", "About") {
-      icon(Icons.TwoTone.Language)
+    val menu = dropDownMenu<String> {
+        item("about", "About") {
+            icon(Icons.TwoTone.Language)
+        }
+        item("copy", "Copy") {
+            icon(Icons.TwoTone.FileCopy)
+        }
+        item("share", "Share") {
+            icon(Icons.TwoTone.Share)
+            item("to_clipboard", "To clipboard") {
+                item("pdf", "PDF")
+                item("epub", "EPUB")
+                item("web_page", "Web page")
+                item("microsoft_word", "Microsoft word")
+            }
+            item("as_a_file", "As a file") {
+                item("pdf", "PDF")
+                item("epub", "EPUB")
+                item("web_page", "Web page")
+                item("microsoft_word", "Microsoft word")
+            }
+        }
+        item("remove", "Remove") {
+            icon(Icons.TwoTone.DeleteSweep)
+            item("yep", "Yep") {
+                icon(Icons.TwoTone.Done)
+            }
+            item("go_back", "Go back") {
+                icon(Icons.TwoTone.Close)
+            }
+        }
     }
-    item("copy", "Copy") {
-      icon(Icons.TwoTone.FileCopy)
-    }
-    item("share", "Share") {
-      icon(Icons.TwoTone.Share)
-      item("to_clipboard", "To clipboard") {
-        item("pdf", "PDF")
-        item("epub", "EPUB")
-        item("web_page", "Web page")
-        item("microsoft_word", "Microsoft word")
-      }
-      item("as_a_file", "As a file") {
-        item("pdf", "PDF")
-        item("epub", "EPUB")
-        item("web_page", "Web page")
-        item("microsoft_word", "Microsoft word")
-      }
-    }
-    item("remove", "Remove") {
-      icon(Icons.TwoTone.DeleteSweep)
-      item("yep", "Yep") {
-        icon(Icons.TwoTone.Done)
-      }
-      item("go_back", "Go back") {
-        icon(Icons.TwoTone.Close)
-      }
-    }
-  }
-  return menu
+    return menu
 }
-	  
-	  
+
+
 ```
 ### Create Dropdown menu
 Create an instance of the `Dropdown menu`.
@@ -99,25 +99,25 @@ Create an instance of the `Dropdown menu`.
 @ExperimentalAnimationApi
 @Composable
 fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (String) -> Unit) {
-  val menu = getMenu()
-  Dropdown(
+    val menu = getMenu()
+    Dropdown(
 
-    isOpen = isOpen,
-    menu = menu,
-    colors = dropDownMenuColors(Teal200, White),
-    onItemSelected = itemSelected,
-    onDismiss = { setIsOpen(false) },
-    offset = DpOffset(8.dp, 0.dp),
-    enter = EnterAnimation.ElevationScale,
-    exit = ExitAnimation.ElevationScale,
-    easing = Easing.FastOutSlowInEasing,
-    enterDuration = 400,
-    exitDuration = 400
+        isOpen = isOpen,
+        menu = menu,
+        colors = dropDownMenuColors(Teal200, White),
+        onItemSelected = itemSelected,
+        onDismiss = { setIsOpen(false) },
+        offset = DpOffset(8.dp, 0.dp),
+        enter = EnterAnimation.ElevationScale,
+        exit = ExitAnimation.ElevationScale,
+        easing = Easing.FastOutSlowInEasing,
+        enterDuration = 400,
+        exitDuration = 400
 
-  )
-}	  
+    )
+}
 
-  
+
 ```
 
 
@@ -129,17 +129,17 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
 
 ```kotlin
  EnterAnimation.FadeIn
- EnterAnimation.SharedAxisXForward
- EnterAnimation.SharedAxisYForward
- EnterAnimation.SharedAxisZForward
- EnterAnimation.ElevationScale
- EnterAnimation.SlideIn
- EnterAnimation.SlideInHorizontally
- EnterAnimation.SlideInVertically
- EnterAnimation.ScaleIn
- EnterAnimation.ExpandIn
- EnterAnimation.ExpandHorizontally
- EnterAnimation.ExpandVertically
+EnterAnimation.SharedAxisXForward
+EnterAnimation.SharedAxisYForward
+EnterAnimation.SharedAxisZForward
+EnterAnimation.ElevationScale
+EnterAnimation.SlideIn
+EnterAnimation.SlideInHorizontally
+EnterAnimation.SlideInVertically
+EnterAnimation.ScaleIn
+EnterAnimation.ExpandIn
+EnterAnimation.ExpandHorizontally
+EnterAnimation.ExpandVertically
 ```
 
 
@@ -148,17 +148,17 @@ fun Menu(isOpen: Boolean = false, setIsOpen: (Boolean) -> Unit, itemSelected: (S
 
 ```kotlin
  ExitAnimation.FadeOut
- ExitAnimation.SharedAxisXBackward
- ExitAnimation.SharedAxisYBackward
- ExitAnimation.SharedAxisZBackward
- ExitAnimation.ElevationScale
- ExitAnimation.SlideOut
- ExitAnimation.SlideOutHorizontally
- ExitAnimation.SlideOutVertically
- ExitAnimation.ScaleOut
- ExitAnimation.ShrinkOut
- ExitAnimation.ShrinkHorizontally
- ExitAnimation.ShrinkVertically
+ExitAnimation.SharedAxisXBackward
+ExitAnimation.SharedAxisYBackward
+ExitAnimation.SharedAxisZBackward
+ExitAnimation.ElevationScale
+ExitAnimation.SlideOut
+ExitAnimation.SlideOutHorizontally
+ExitAnimation.SlideOutVertically
+ExitAnimation.ScaleOut
+ExitAnimation.ShrinkOut
+ExitAnimation.ShrinkHorizontally
+ExitAnimation.ShrinkVertically
 ```
 
 
@@ -209,15 +209,15 @@ Also, __[follow me](https://github.com/AndroidPoet)__ on GitHub for more cool pr
 ```xml
 Copyright 2022 AndroidPoet (Ranbir Singh)
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
 ```

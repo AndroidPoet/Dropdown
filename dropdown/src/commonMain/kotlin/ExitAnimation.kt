@@ -1,6 +1,3 @@
-package com.androidpoet.dropdown
-
-import AnimationProp
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleOut
@@ -8,8 +5,6 @@ import androidx.compose.animation.slideOut
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.ui.unit.IntOffset
-import getAnimationSpec
-import getOffsetAnimationSpec
 
 /** MetaphorExitAnimation is the collection of the exit animations. */
 public enum class ExitAnimation(public val value: Int) {

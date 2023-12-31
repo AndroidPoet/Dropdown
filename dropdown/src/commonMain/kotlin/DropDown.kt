@@ -15,9 +15,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowLeft
 import androidx.compose.material.icons.rounded.ArrowRight
 import androidx.compose.runtime.Composable
@@ -31,8 +28,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import com.androidpoet.dropdown.ExitAnimation
-import com.androidpoet.dropdown.getExitAnimation
 
 /**
  * [Dropdown] is a DropdownMenu wrapper class to add cascade effect and animations.
@@ -328,6 +323,6 @@ internal fun animateContent(
     exitAnimation: ExitAnimation,
 ): ContentTransform =
     getEnterAnimation(animationProp, enterAnimation) togetherWith
-        getExitAnimation(animationProp, exitAnimation)
+            getExitAnimation(animationProp, exitAnimation)
 
 public val MAX_WIDTH: Dp = 192.dp
