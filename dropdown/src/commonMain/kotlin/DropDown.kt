@@ -17,6 +17,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowLeft
+import androidx.compose.material.icons.rounded.ArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -243,7 +246,7 @@ public fun CascadeHeaderItem(
 ) {
     MenuItem(onClick = { onClick() }) {
         MenuItemIcon(
-            icon = Icons.Default.ArrowBack,
+            icon = Icons.Rounded.ArrowLeft,
             tint = contentColor.copy(alpha = ContentAlpha.medium),
         )
         Spacer(modifier = Modifier.width(4.dp))
@@ -284,7 +287,7 @@ public fun <T> ParentItem(
             color = contentColor,
         )
         Space()
-        MenuItemIcon(icon = Icons.Default.KeyboardArrowRight, tint = contentColor)
+        MenuItemIcon(icon = Icons.Rounded.ArrowRight, tint = contentColor)
     }
 }
 
