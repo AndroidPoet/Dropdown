@@ -7,7 +7,6 @@ plugins {
   alias(libs.plugins.baseline.profile)
 }
 
-
 kotlin {
   androidTarget { publishLibraryVariants("release") }
   jvm("desktop")
@@ -21,7 +20,8 @@ kotlin {
     nodejs()
   }
 
-  @Suppress("OPT_IN_USAGE") applyHierarchyTemplate {
+  @Suppress("OPT_IN_USAGE")
+  applyHierarchyTemplate {
     common {
       group("jvm") {
         withAndroidTarget()
@@ -97,8 +97,5 @@ baselineProfile {
 dependencies {
   baselineProfile(project(":baselineprofile"))
 }
-
-
-
 
 tasks.register("testClasses")

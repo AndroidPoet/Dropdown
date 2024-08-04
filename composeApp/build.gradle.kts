@@ -4,7 +4,6 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
   alias(libs.plugins.multiplatform)
@@ -25,7 +24,8 @@ kotlin {
       }
     }
     // https://www.jetbrains.com/help/kotlin-multiplatform-dev/compose-test.html
-    @OptIn(ExperimentalKotlinGradlePluginApi::class) instrumentedTestVariant {
+    @OptIn(ExperimentalKotlinGradlePluginApi::class)
+    instrumentedTestVariant {
       sourceSetTree.set(KotlinSourceSetTree.test)
       dependencies {
         debugImplementation(libs.androidx.testManifest)
@@ -59,7 +59,8 @@ kotlin {
 
     commonTest.dependencies {
       implementation(kotlin("test"))
-      @OptIn(ExperimentalComposeLibrary::class) implementation(compose.uiTest)
+      @OptIn(ExperimentalComposeLibrary::class)
+      implementation(compose.uiTest)
     }
 
     androidMain.dependencies {
@@ -94,7 +95,8 @@ android {
     res.srcDirs("src/androidMain/res")
   }
   // https://developer.android.com/studio/test/gradle-managed-devices
-  @Suppress("UnstableApiUsage") testOptions {
+  @Suppress("UnstableApiUsage")
+  testOptions {
     managedDevices.devices {
       maybeCreate<ManagedVirtualDevice>("pixel5").apply {
         device = "Pixel 5"
@@ -138,7 +140,6 @@ compose.desktop {
     }
   }
 }
-
 
 task("testClasses") {}
 dependencies {
