@@ -1,0 +1,164 @@
+public final class io/androidpoet/dropdown/AnimationProp {
+	public static final field $stable I
+	public fun <init> (IIILio/androidpoet/dropdown/Easing;F)V
+	public synthetic fun <init> (IIILio/androidpoet/dropdown/Easing;FILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()Lio/androidpoet/dropdown/Easing;
+	public final fun component5 ()F
+	public final fun copy (IIILio/androidpoet/dropdown/Easing;F)Lio/androidpoet/dropdown/AnimationProp;
+	public static synthetic fun copy$default (Lio/androidpoet/dropdown/AnimationProp;IIILio/androidpoet/dropdown/Easing;FILjava/lang/Object;)Lio/androidpoet/dropdown/AnimationProp;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDelay ()I
+	public final fun getEasing ()Lio/androidpoet/dropdown/Easing;
+	public final fun getEnterDuration ()I
+	public final fun getExitDuration ()I
+	public final fun getInitialAlpha ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/androidpoet/dropdown/ContentAlpha {
+	public static final field $stable I
+	public static final field DISABLED F
+	public static final field HIGH F
+	public static final field INSTANCE Lio/androidpoet/dropdown/ContentAlpha;
+	public static final field MEDIUM F
+}
+
+public final class io/androidpoet/dropdown/DropDownKt {
+	public static final fun CascadeHeaderItem-iJQMabo (Ljava/lang/String;JLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
+	public static final fun ChildItem-ww6aTOc (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;JLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+	public static final fun Dropdown-JmJbLUk (Landroidx/compose/ui/Modifier;ZLio/androidpoet/dropdown/MenuItem;Lio/androidpoet/dropdown/DropDownMenuColors;JLio/androidpoet/dropdown/EnterAnimation;Lio/androidpoet/dropdown/ExitAnimation;Lio/androidpoet/dropdown/Easing;IILkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
+	public static final fun DropdownContent (Lio/androidpoet/dropdown/MenuItem;Lkotlin/jvm/functions/Function1;Lio/androidpoet/dropdown/DropDownMenuColors;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+	public static final fun MenuItem (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
+	public static final fun MenuItemIcon-RPmYEkk (Landroidx/compose/ui/graphics/vector/ImageVector;JLandroidx/compose/runtime/Composer;I)V
+	public static final fun MenuItemText-cf5BqRc (Landroidx/compose/ui/Modifier;Ljava/lang/String;JZLandroidx/compose/runtime/Composer;II)V
+	public static final fun ParentItem-ww6aTOc (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;JLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+	public static final fun Space (Landroidx/compose/runtime/Composer;I)V
+	public static final fun getMAX_WIDTH ()F
+}
+
+public final class io/androidpoet/dropdown/DropDownMenuBuilder {
+	public static final field $stable I
+	public fun <init> ()V
+	public final fun getMenu ()Lio/androidpoet/dropdown/MenuItem;
+	public final fun icon (Landroidx/compose/ui/graphics/vector/ImageVector;)V
+	public final fun item (Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
+	public static synthetic fun item$default (Lio/androidpoet/dropdown/DropDownMenuBuilder;Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun setMenu (Lio/androidpoet/dropdown/MenuItem;)V
+}
+
+public final class io/androidpoet/dropdown/DropDownMenuBuilderKt {
+	public static final fun dropDownMenu (Lkotlin/jvm/functions/Function1;)Lio/androidpoet/dropdown/MenuItem;
+}
+
+public final class io/androidpoet/dropdown/DropDownMenuColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-0d7_KjU ()J
+	public final fun component2-0d7_KjU ()J
+	public final fun copy--OWjLjI (JJ)Lio/androidpoet/dropdown/DropDownMenuColors;
+	public static synthetic fun copy--OWjLjI$default (Lio/androidpoet/dropdown/DropDownMenuColors;JJILjava/lang/Object;)Lio/androidpoet/dropdown/DropDownMenuColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBackgroundColor-0d7_KjU ()J
+	public final fun getContentColor-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/androidpoet/dropdown/Easing : java/lang/Enum {
+	public static final field FastOutLinearInEasing Lio/androidpoet/dropdown/Easing;
+	public static final field FastOutSlowInEasing Lio/androidpoet/dropdown/Easing;
+	public static final field LinearEasing Lio/androidpoet/dropdown/Easing;
+	public static final field LinearOutSlowInEasing Lio/androidpoet/dropdown/Easing;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/androidpoet/dropdown/Easing;
+	public static fun values ()[Lio/androidpoet/dropdown/Easing;
+}
+
+public final class io/androidpoet/dropdown/EasingKt {
+	public static final fun getEasing (Lio/androidpoet/dropdown/Easing;)Landroidx/compose/animation/core/Easing;
+}
+
+public final class io/androidpoet/dropdown/EnterAnimation : java/lang/Enum {
+	public static final field ElevationScale Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field ExpandHorizontally Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field ExpandIn Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field ExpandVertically Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field FadeIn Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field ScaleIn Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field SharedAxisXForward Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field SharedAxisYForward Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field SharedAxisZForward Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field SlideIn Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field SlideInHorizontally Lio/androidpoet/dropdown/EnterAnimation;
+	public static final field SlideInVertically Lio/androidpoet/dropdown/EnterAnimation;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lio/androidpoet/dropdown/EnterAnimation;
+	public static fun values ()[Lio/androidpoet/dropdown/EnterAnimation;
+}
+
+public final class io/androidpoet/dropdown/EnterAnimationKt {
+	public static final fun getAnimationSpec (Lio/androidpoet/dropdown/AnimationProp;)Landroidx/compose/animation/core/TweenSpec;
+	public static final fun getEnterAnimation (Lio/androidpoet/dropdown/AnimationProp;Lio/androidpoet/dropdown/EnterAnimation;)Landroidx/compose/animation/EnterTransition;
+	public static final fun getOffsetAnimationSpec (Lio/androidpoet/dropdown/AnimationProp;)Landroidx/compose/animation/core/FiniteAnimationSpec;
+}
+
+public final class io/androidpoet/dropdown/ExitAnimation : java/lang/Enum {
+	public static final field ElevationScale Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field FadeOut Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field ScaleOut Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field SharedAxisXBackward Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field SharedAxisYBackward Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field SharedAxisZBackward Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field ShrinkHorizontally Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field ShrinkOut Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field ShrinkVertically Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field SlideOut Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field SlideOutHorizontally Lio/androidpoet/dropdown/ExitAnimation;
+	public static final field SlideOutVertically Lio/androidpoet/dropdown/ExitAnimation;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lio/androidpoet/dropdown/ExitAnimation;
+	public static fun values ()[Lio/androidpoet/dropdown/ExitAnimation;
+}
+
+public final class io/androidpoet/dropdown/ExitAnimationKt {
+	public static final fun getExitAnimation (Lio/androidpoet/dropdown/AnimationProp;Lio/androidpoet/dropdown/ExitAnimation;)Landroidx/compose/animation/ExitTransition;
+}
+
+public final class io/androidpoet/dropdown/MenuColorsKt {
+	public static final fun dropDownMenuColors-dgg9oW8 (JJLandroidx/compose/runtime/Composer;II)Lio/androidpoet/dropdown/DropDownMenuColors;
+}
+
+public abstract interface annotation class io/androidpoet/dropdown/MenuDSL : java/lang/annotation/Annotation {
+}
+
+public final class io/androidpoet/dropdown/MenuItem {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/Object;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/Object;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/Object;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/Object;Ljava/lang/String;)Lio/androidpoet/dropdown/MenuItem;
+	public static synthetic fun copy$default (Lio/androidpoet/dropdown/MenuItem;Ljava/lang/Object;Ljava/lang/String;ILjava/lang/Object;)Lio/androidpoet/dropdown/MenuItem;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getChild (Ljava/lang/Object;)Lio/androidpoet/dropdown/MenuItem;
+	public final fun getChildren ()Ljava/util/List;
+	public final fun getIcon ()Landroidx/compose/ui/graphics/vector/ImageVector;
+	public final fun getId ()Ljava/lang/Object;
+	public final fun getParent ()Lio/androidpoet/dropdown/MenuItem;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun hasChildren ()Z
+	public final fun hasParent ()Z
+	public fun hashCode ()I
+	public final fun setChildren (Ljava/util/List;)V
+	public final fun setIcon (Landroidx/compose/ui/graphics/vector/ImageVector;)V
+	public final fun setParent (Lio/androidpoet/dropdown/MenuItem;)V
+	public fun toString ()Ljava/lang/String;
+}
+
