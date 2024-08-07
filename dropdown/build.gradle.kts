@@ -1,3 +1,5 @@
+import com.vanniktech.maven.publish.SonatypeHost
+
 plugins {
   alias(libs.plugins.multiplatform)
   alias(libs.plugins.compose.compiler)
@@ -6,6 +8,10 @@ plugins {
   alias(libs.plugins.nexus.plugin)
   alias(libs.plugins.baseline.profile)
 }
+
+
+
+
 
 kotlin {
   androidTarget { publishLibraryVariants("release") }
@@ -64,6 +70,8 @@ kotlin {
     }
   }
 }
+
+
 
 android {
   compileSdk = 34
