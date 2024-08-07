@@ -8,11 +8,6 @@ plugins {
   alias(libs.plugins.nexus.plugin)
   alias(libs.plugins.baseline.profile)
 }
-
-
-
-
-
 kotlin {
   androidTarget { publishLibraryVariants("release") }
   jvm("desktop")
@@ -98,12 +93,12 @@ android {
   }
 }
 
-baselineProfile {
-  baselineProfileOutputDir = "../../src/androidMain"
-}
-
-dependencies {
-  baselineProfile(project(":baselineprofile"))
-}
+//baselineProfile {
+//  baselineProfileOutputDir = "../../src/androidMain"
+//}
+//
+//dependencies {
+//  baselineProfile(project(":baselineprofile"))
+//}
 
 tasks.register("testClasses")

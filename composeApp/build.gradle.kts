@@ -142,7 +142,7 @@ compose.desktop {
 }
 
 task("testClasses") {}
-dependencies {
-  implementation(libs.androidx.profileinstaller)
-  "baselineProfile"(project(":baselineprofile"))
-}
+//dependencies {
+//  implementation(libs.androidx.profileinstaller)
+//  "baselineProfile"(project(":baselineprofile"))
+//}
