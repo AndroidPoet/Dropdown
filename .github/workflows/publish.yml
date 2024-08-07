@@ -22,16 +22,13 @@ jobs:
       - name: Grant Permission to Execute Gradle
         run: chmod +x gradlew
 
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: build
+      - name: Release build
+        run: ./gradlew assemble
 
       - name: Publish to MavenCentral
         run: |
-          echo "Publishing and Releasing library 🚀"
           ./gradlew publishAllPublicationsToMavenCentral --no-configuration-cache
-           echo "Published and Released ✅"
+
         env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.OSSRH_USERNAME }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.OSSRH_PASSWORD }}
