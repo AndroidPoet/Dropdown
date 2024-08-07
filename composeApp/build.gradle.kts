@@ -10,7 +10,7 @@ plugins {
   alias(libs.plugins.compose.compiler)
   alias(libs.plugins.compose)
   alias(libs.plugins.android.application)
-  alias(libs.plugins.baseline.profile)
+ // alias(libs.plugins.baseline.profile)
 }
 
 kotlin {
