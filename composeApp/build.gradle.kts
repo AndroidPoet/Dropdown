@@ -10,7 +10,7 @@ plugins {
   alias(libs.plugins.compose.compiler)
   alias(libs.plugins.compose)
   alias(libs.plugins.android.application)
- // alias(libs.plugins.baseline.profile)
+  alias(libs.plugins.baseline.profile)
 }
 
 kotlin {
@@ -94,17 +94,7 @@ android {
     manifest.srcFile("src/androidMain/AndroidManifest.xml")
     res.srcDirs("src/androidMain/res")
   }
-  // https://developer.android.com/studio/test/gradle-managed-devices
-  @Suppress("UnstableApiUsage")
-  testOptions {
-    managedDevices.devices {
-      maybeCreate<ManagedVirtualDevice>("pixel5").apply {
-        device = "Pixel 5"
-        apiLevel = 34
-        systemImageSource = "aosp"
-      }
-    }
-  }
+
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
     targetCompatibility = JavaVersion.VERSION_11
@@ -142,7 +132,7 @@ compose.desktop {
 }
 
 task("testClasses") {}
-//dependencies {
-//  implementation(libs.androidx.profileinstaller)
-//  "baselineProfile"(project(":baselineprofile"))
-//}
+dependencies {
+  implementation(libs.androidx.profileinstaller)
+  "baselineProfile"(project(":baselineprofile"))
+}
