@@ -28,12 +28,8 @@ android {
 
   targetProjectPath = ":composeApp"
 
-  // This code creates the gradle managed device used to generate baseline profiles.
-  // To use GMD please invoke generation through the command line:
-  // ./gradlew :composeApp:generateBaselineProfile
-
   testOptions.managedDevices.devices {
-    maybeCreate<com.android.build.api.dsl.ManagedVirtualDevice>("pixel6api31").apply {
+    maybeCreate<ManagedVirtualDevice>("pixel6api31").apply {
       device = "Pixel 6"
       apiLevel = 31
       systemImageSource = "aosp"
