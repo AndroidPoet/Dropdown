@@ -10,7 +10,6 @@ plugins {
   alias(libs.plugins.compose.compiler)
   alias(libs.plugins.compose)
   alias(libs.plugins.android.application)
-  alias(libs.plugins.baseline.profile)
 }
 
 kotlin {
@@ -132,7 +131,3 @@ compose.desktop {
 }
 
 task("testClasses") {}
-dependencies {
-  implementation(libs.androidx.profileinstaller)
-  "baselineProfile"(project(":baselineprofile"))
-}

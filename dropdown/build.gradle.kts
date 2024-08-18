@@ -6,7 +6,6 @@ plugins {
   alias(libs.plugins.compose)
   alias(libs.plugins.android.library)
   alias(libs.plugins.nexus.plugin)
-  alias(libs.plugins.baseline.profile)
 }
 kotlin {
   androidTarget { publishLibraryVariants("release") }
@@ -93,12 +92,5 @@ android {
   }
 }
 
-baselineProfile {
-  baselineProfileOutputDir = "../../src/androidMain"
-}
-
-dependencies {
-  baselineProfile(project(":baselineprofile"))
-}
 
 tasks.register("testClasses")
