@@ -1,5 +1,5 @@
 /*
- * Designed and developed by 2022 androidpoet (Ranbir Singh)
+ * Designed and developed by 2024 androidpoet (Ranbir Singh)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,18 +20,31 @@ import androidx.compose.ui.graphics.vector.ImageVector
 @DslMarker
 public annotation class MenuDSL
 
+// Create a sealed interface for menu items
 @MenuDSL
-public data class MenuItem<T : Any>(val id: T? = null, val title: String = "") {
+public sealed interface IMenuItem<T : Any> {
+  public val parent: MenuItem<T>?
+}
+
+// Represent a divider as a special menu item
+@MenuDSL
+public class Divider<T : Any>(override val parent: MenuItem<T>? = null) : IMenuItem<T>
+
+@MenuDSL
+public data class MenuItem<T : Any>(
+  val id: T? = null,
+  val title: String = "",
+  override val parent: MenuItem<T>? = null,
+) : IMenuItem<T> {
   var icon: ImageVector? = null
-  var children: MutableList<MenuItem<T>>? = null
-  var parent: MenuItem<T>? = null
+  var children: MutableList<IMenuItem<T>>? = null // Note: Changed to IMenuItem
 
   public fun hasChildren(): Boolean = !children.isNullOrEmpty()
 
   public fun hasParent(): Boolean = parent != null
 
   public fun getChild(id: T): MenuItem<T>? =
-    children?.let { items -> items.find { item -> item.id == id } }
+    children?.filterIsInstance<MenuItem<T>>()?.find { item -> item.id == id }
 }
 
 @MenuDSL
@@ -42,13 +55,19 @@ public class DropDownMenuBuilder<T : Any> {
     menu.icon = value
   }
 
+  public fun horizontalDivider() {
+    if (menu.children == null) {
+      menu.children = mutableListOf()
+    }
+    menu.children?.add(Divider(menu))
+  }
+
   public fun item(
     id: T,
     title: String,
     init: (DropDownMenuBuilder<T>.() -> Unit)? = null,
   ) {
-    val newItem = MenuItem<T>(id, title)
-    newItem.parent = menu
+    val newItem = MenuItem<T>(id, title, menu)
 
     init?.invoke(DropDownMenuBuilder<T>().apply { menu = newItem })
 

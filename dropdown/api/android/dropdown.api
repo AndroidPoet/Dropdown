@@ -27,11 +27,19 @@ public final class io/androidpoet/dropdown/ContentAlpha {
 	public static final field MEDIUM F
 }
 
+public final class io/androidpoet/dropdown/Divider : io/androidpoet/dropdown/IMenuItem {
+	public static final field $stable I
+	public fun <init> ()V
+	public fun <init> (Lio/androidpoet/dropdown/MenuItem;)V
+	public synthetic fun <init> (Lio/androidpoet/dropdown/MenuItem;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getParent ()Lio/androidpoet/dropdown/MenuItem;
+}
+
 public final class io/androidpoet/dropdown/DropDownKt {
 	public static final fun CascadeHeaderItem-iJQMabo (Ljava/lang/String;JLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
 	public static final fun ChildItem-ww6aTOc (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;JLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
-	public static final fun Dropdown-JmJbLUk (Landroidx/compose/ui/Modifier;ZLio/androidpoet/dropdown/MenuItem;Lio/androidpoet/dropdown/DropDownMenuColors;JLio/androidpoet/dropdown/EnterAnimation;Lio/androidpoet/dropdown/ExitAnimation;Lio/androidpoet/dropdown/Easing;IILkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
-	public static final fun DropdownContent (Lio/androidpoet/dropdown/MenuItem;Lkotlin/jvm/functions/Function1;Lio/androidpoet/dropdown/DropDownMenuColors;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+	public static final fun Dropdown-dJ089pE (Landroidx/compose/ui/Modifier;ZLio/androidpoet/dropdown/MenuItem;Lio/androidpoet/dropdown/DropDownMenuColors;JLio/androidpoet/dropdown/EnterAnimation;Lio/androidpoet/dropdown/ExitAnimation;Lio/androidpoet/dropdown/Easing;IIFLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
+	public static final fun DropdownContent-FJfuzF0 (Lio/androidpoet/dropdown/MenuItem;Lkotlin/jvm/functions/Function1;Lio/androidpoet/dropdown/DropDownMenuColors;Lkotlin/jvm/functions/Function0;FLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItem (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemIcon-RPmYEkk (Landroidx/compose/ui/graphics/vector/ImageVector;JLandroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemText-cf5BqRc (Landroidx/compose/ui/Modifier;Ljava/lang/String;JZLandroidx/compose/runtime/Composer;II)V
@@ -44,6 +52,7 @@ public final class io/androidpoet/dropdown/DropDownMenuBuilder {
 	public static final field $stable I
 	public fun <init> ()V
 	public final fun getMenu ()Lio/androidpoet/dropdown/MenuItem;
+	public final fun horizontalDivider ()V
 	public final fun icon (Landroidx/compose/ui/graphics/vector/ImageVector;)V
 	public final fun item (Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun item$default (Lio/androidpoet/dropdown/DropDownMenuBuilder;Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
@@ -130,6 +139,10 @@ public final class io/androidpoet/dropdown/ExitAnimationKt {
 	public static final fun getExitAnimation (Lio/androidpoet/dropdown/AnimationProp;Lio/androidpoet/dropdown/ExitAnimation;)Landroidx/compose/animation/ExitTransition;
 }
 
+public abstract interface class io/androidpoet/dropdown/IMenuItem {
+	public abstract fun getParent ()Lio/androidpoet/dropdown/MenuItem;
+}
+
 public final class io/androidpoet/dropdown/MenuColorsKt {
 	public static final fun dropDownMenuColors-dgg9oW8 (JJLandroidx/compose/runtime/Composer;II)Lio/androidpoet/dropdown/DropDownMenuColors;
 }
@@ -137,28 +150,28 @@ public final class io/androidpoet/dropdown/MenuColorsKt {
 public abstract interface annotation class io/androidpoet/dropdown/MenuDSL : java/lang/annotation/Annotation {
 }
 
-public final class io/androidpoet/dropdown/MenuItem {
+public final class io/androidpoet/dropdown/MenuItem : io/androidpoet/dropdown/IMenuItem {
 	public static final field $stable I
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/Object;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/Object;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;Ljava/lang/String;Lio/androidpoet/dropdown/MenuItem;)V
+	public synthetic fun <init> (Ljava/lang/Object;Ljava/lang/String;Lio/androidpoet/dropdown/MenuItem;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/Object;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/Object;Ljava/lang/String;)Lio/androidpoet/dropdown/MenuItem;
-	public static synthetic fun copy$default (Lio/androidpoet/dropdown/MenuItem;Ljava/lang/Object;Ljava/lang/String;ILjava/lang/Object;)Lio/androidpoet/dropdown/MenuItem;
+	public final fun component3 ()Lio/androidpoet/dropdown/MenuItem;
+	public final fun copy (Ljava/lang/Object;Ljava/lang/String;Lio/androidpoet/dropdown/MenuItem;)Lio/androidpoet/dropdown/MenuItem;
+	public static synthetic fun copy$default (Lio/androidpoet/dropdown/MenuItem;Ljava/lang/Object;Ljava/lang/String;Lio/androidpoet/dropdown/MenuItem;ILjava/lang/Object;)Lio/androidpoet/dropdown/MenuItem;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getChild (Ljava/lang/Object;)Lio/androidpoet/dropdown/MenuItem;
 	public final fun getChildren ()Ljava/util/List;
 	public final fun getIcon ()Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getId ()Ljava/lang/Object;
-	public final fun getParent ()Lio/androidpoet/dropdown/MenuItem;
+	public fun getParent ()Lio/androidpoet/dropdown/MenuItem;
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun hasChildren ()Z
 	public final fun hasParent ()Z
 	public fun hashCode ()I
 	public final fun setChildren (Ljava/util/List;)V
 	public final fun setIcon (Landroidx/compose/ui/graphics/vector/ImageVector;)V
-	public final fun setParent (Lio/androidpoet/dropdown/MenuItem;)V
 	public fun toString ()Ljava/lang/String;
 }
 

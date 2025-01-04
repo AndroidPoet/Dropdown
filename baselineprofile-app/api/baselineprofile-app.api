@@ -1,0 +1,38 @@
+public final class io/androidpoet/dropdown/baselineprofile/app/BuildConfig {
+	public static final field APPLICATION_ID Ljava/lang/String;
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public fun <init> ()V
+}
+
+public final class io/androidpoet/dropdown/baselineprofile/app/ComposableSingletons$MainActivityKt {
+	public static final field INSTANCE Lio/androidpoet/dropdown/baselineprofile/app/ComposableSingletons$MainActivityKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$baselineprofile_app_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-2$baselineprofile_app_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class io/androidpoet/dropdown/baselineprofile/app/MainActivity : androidx/activity/ComponentActivity {
+	public static final field $stable I
+	public fun <init> ()V
+}
+
+public final class io/androidpoet/dropdown/baselineprofile/app/ui/theme/ColorKt {
+	public static final fun getPink40 ()J
+	public static final fun getPink80 ()J
+	public static final fun getPurple40 ()J
+	public static final fun getPurple80 ()J
+	public static final fun getPurpleGrey40 ()J
+	public static final fun getPurpleGrey80 ()J
+}
+
+public final class io/androidpoet/dropdown/baselineprofile/app/ui/theme/ThemeKt {
+	public static final fun DropdownDemoTheme (ZZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/androidpoet/dropdown/baselineprofile/app/ui/theme/TypeKt {
+	public static final fun getTypography ()Landroidx/compose/material3/Typography;
+}
+

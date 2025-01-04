@@ -1,5 +1,5 @@
 /*
- * Designed and developed by 2022 androidpoet (Ranbir Singh)
+ * Designed and developed by 2024 androidpoet (Ranbir Singh)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,10 +20,12 @@ import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -31,6 +33,7 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.ArrowRight
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -39,6 +42,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -75,13 +79,14 @@ public fun <T : Any> Dropdown(
   easing: Easing = Easing.FastOutLinearInEasing,
   enterDuration: Int = 500,
   exitDuration: Int = 500,
+  width: Dp = MAX_WIDTH,
   onItemSelected: (T?) -> Unit,
   onDismiss: () -> Unit,
 ) {
   var currentMenu by remember(menu, isOpen) { mutableStateOf(menu) }
 
   DropdownMenu(
-    modifier = modifier.width(MAX_WIDTH).background(colors.backgroundColor),
+    modifier = modifier.width(width).background(colors.backgroundColor),
     expanded = isOpen,
     onDismissRequest = { onDismiss() },
     offset = offset,
@@ -102,6 +107,7 @@ public fun <T : Any> Dropdown(
         targetMenu = targetMenu,
         onItemSelected = onItemSelected,
         colors = colors,
+        width = width,
         onParentClick = {
           currentMenu =
             targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
@@ -131,9 +137,10 @@ public fun <T : Any> DropdownContent(
   onItemSelected: (T?) -> Unit,
   colors: DropDownMenuColors,
   onParentClick: () -> Unit,
+  width: Dp,
   onChildClick: (T) -> Unit,
 ) {
-  Column(modifier = Modifier.width(192.dp)) {
+  Column(modifier = Modifier.width(width)) {
     if (targetMenu.hasParent()) {
       CascadeHeaderItem(
         targetMenu.title,
@@ -142,27 +149,38 @@ public fun <T : Any> DropdownContent(
       )
     }
     if (targetMenu.hasChildren()) {
-      targetMenu.children?.forEach { item ->
-        if (item.hasChildren()) {
-          ParentItem(
-            item.id,
-            item.title,
-            item.icon,
-            colors.contentColor,
-            onClick = { id ->
-              if (id != null) {
-                onChildClick(id)
-              }
-            },
-          )
-        } else {
-          ChildItem(
-            item.id,
-            item.title,
-            item.icon,
-            colors.contentColor,
-            onItemSelected,
-          )
+      targetMenu.children?.forEach { menuItem ->
+        when (menuItem) {
+          is MenuItem -> {
+            if (menuItem.hasChildren()) {
+              ParentItem(
+                menuItem.id,
+                menuItem.title,
+                menuItem.icon,
+                colors.contentColor,
+                onClick = { id ->
+                  if (id != null) {
+                    onChildClick(id)
+                  }
+                },
+              )
+            } else {
+              ChildItem(
+                menuItem.id,
+                menuItem.title,
+                menuItem.icon,
+                colors.contentColor,
+                onItemSelected,
+              )
+            }
+          }
+
+          is Divider -> {
+            HorizontalDivider(
+              modifier = Modifier.fillMaxWidth(),
+              color = colors.contentColor.copy(alpha = 0.12f),
+            )
+          }
         }
       }
     }
@@ -241,7 +259,11 @@ public fun MenuItem(
     onClick = onClick,
     interactionSource = remember { MutableInteractionSource() },
     text = {
-      Row {
+      Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically,
+      ) {
         content()
       }
     },

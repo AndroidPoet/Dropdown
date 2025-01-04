@@ -1,12 +1,34 @@
-import com.vanniktech.maven.publish.SonatypeHost
+import io.androidpoet.dropdown.Configuration
 
+
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-  alias(libs.plugins.multiplatform)
-  alias(libs.plugins.compose.compiler)
-  alias(libs.plugins.compose)
   alias(libs.plugins.android.library)
+  alias(libs.plugins.kotlin.multiplatform)
+  alias(libs.plugins.jetbrains.compose)
+  alias(libs.plugins.compose.compiler)
   alias(libs.plugins.nexus.plugin)
+  alias(libs.plugins.baseline.profile)
 }
+
+apply(from = "$rootDir/scripts/publish-module.gradle.kts")
+
+mavenPublishing {
+  val artifactId = "drafter"
+  coordinates(
+    Configuration.artifactGroup,
+    artifactId,
+    rootProject.extra.get("libVersion").toString(),
+  )
+
+  pom {
+    name.set(artifactId)
+    description.set(
+      "\uD83D\uDCCA A powerful, flexible charting library for Compose Multiplatform applications",
+    )
+  }
+}
+
 kotlin {
   androidTarget { publishLibraryVariants("release") }
   jvm("desktop")
@@ -19,7 +41,6 @@ kotlin {
     browser()
     nodejs()
   }
-
   @Suppress("OPT_IN_USAGE")
   applyHierarchyTemplate {
     common {
@@ -47,29 +68,39 @@ kotlin {
     }
   }
 
-  kotlin {
-    jvmToolchain(17) // This sets the JVM toolchain for Kotlin compilation
-  }
-
-  sourceSets {
-    commonMain {
-      dependencies {
-        implementation(compose.runtime)
-        implementation(compose.foundation)
-        implementation(compose.material3)
-        implementation(compose.materialIconsExtended)
-        implementation(compose.components.resources)
-        implementation(compose.components.uiToolingPreview)
+  targets.configureEach {
+    compilations.configureEach {
+      compilerOptions.configure {
+        // https://youtrack.jetbrains.com/issue/KT-61573
+        freeCompilerArgs.add("-Xexpect-actual-classes")
       }
     }
   }
+
+  sourceSets {
+    val commonMain by getting {
+      dependencies {
+        implementation(compose.ui)
+        implementation(compose.material3)
+        implementation(compose.runtime)
+        implementation(compose.animation)
+        implementation(compose.materialIconsExtended)
+        implementation(libs.composeIcons.featherIcons)
+      }
+    }
+  }
+
+  explicitApi()
 }
-
-
-
+composeCompiler {
+  enableStrongSkippingMode = true
+}
 android {
-  compileSdk = 34
-  namespace = "io.androidpoet.dropdown"
+  compileSdk = Configuration.compileSdk
+  namespace = "io.androidpoet.drafter"
+  defaultConfig {
+    minSdk = Configuration.minSdk
+  }
 
   buildFeatures {
     compose = true
@@ -77,8 +108,8 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
   }
 
   packaging {
@@ -92,5 +123,24 @@ android {
   }
 }
 
+baselineProfile {
+  baselineProfileOutputDir = "../../src/androidMain"
+  filter {
+    include("io.androidpoet.drafter.**")
+  }
+}
 
-tasks.register("testClasses")
+dependencies {
+  baselineProfile(project(":baselineprofile"))
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+  kotlinOptions {
+    jvmTarget = "1.8"
+    freeCompilerArgs +=
+      listOf(
+        "-Xexplicit-api=strict",
+        "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+      )
+  }
+}
