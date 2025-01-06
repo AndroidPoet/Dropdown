@@ -11,6 +11,8 @@
 
 <img src="https://user-images.githubusercontent.com/13647384/166186269-091efb42-a143-4ccd-b9c4-0e0c4748c56e.gif"/>
 
+[Demo](https://androidpoet.github.io/LibPreviewWasm)
+
 </div>
 
 ## Who's using Dropdown?
