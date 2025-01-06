@@ -1,4 +1,5 @@
 import io.androidpoet.dropdown.Configuration
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 
 @Suppress("DSL_SCOPE_VIOLATION")
@@ -14,7 +15,7 @@ plugins {
 apply(from = "$rootDir/scripts/publish-module.gradle.kts")
 
 mavenPublishing {
-  val artifactId = "drafter"
+  val artifactId = "dropdown"
   coordinates(
     Configuration.artifactGroup,
     artifactId,
@@ -24,7 +25,7 @@ mavenPublishing {
   pom {
     name.set(artifactId)
     description.set(
-      "\uD83D\uDCCA A powerful, flexible charting library for Compose Multiplatform applications",
+      "\uD83D\uDCA7 A Powerful and customizable Jetpack Compose dropdown menu with cascade and animations",
     )
   }
 }
@@ -41,6 +42,13 @@ kotlin {
     browser()
     nodejs()
   }
+  @OptIn(ExperimentalWasmDsl::class)
+  wasmJs {
+    browser()
+    nodejs()
+    binaries.executable()
+  }
+
   @Suppress("OPT_IN_USAGE")
   applyHierarchyTemplate {
     common {
@@ -63,7 +71,9 @@ kotlin {
             }
           }
           withJs()
+          withWasmJs()
         }
+
       }
     }
   }
@@ -97,7 +107,7 @@ composeCompiler {
 }
 android {
   compileSdk = Configuration.compileSdk
-  namespace = "io.androidpoet.drafter"
+  namespace = "io.androidpoet.dropdown"
   defaultConfig {
     minSdk = Configuration.minSdk
   }
@@ -126,7 +136,7 @@ android {
 baselineProfile {
   baselineProfileOutputDir = "../../src/androidMain"
   filter {
-    include("io.androidpoet.drafter.**")
+    include("io.androidpoet.dropdown.**")
   }
 }
 
