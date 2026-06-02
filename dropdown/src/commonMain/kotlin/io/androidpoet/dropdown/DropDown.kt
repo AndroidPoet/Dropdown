@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -46,6 +47,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -175,6 +177,13 @@ public fun <T : Any> DropdownContent(
             }
           }
 
+          is SectionHeaderItem -> {
+            SectionHeader(
+              title = menuItem.title,
+              contentColor = colors.contentColor,
+            )
+          }
+
           is Divider -> {
             HorizontalDivider(
               modifier = Modifier.fillMaxWidth(),
@@ -185,6 +194,29 @@ public fun <T : Any> DropdownContent(
       }
     }
   }
+}
+
+/**
+ * Displays a section header label within the dropdown menu.
+ *
+ * @param title The title text for the section.
+ * @param contentColor The color of the content.
+ */
+@Composable
+public fun SectionHeader(
+  title: String,
+  contentColor: Color,
+) {
+  Text(
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(horizontal = 12.dp, vertical = 6.dp),
+    text = title.uppercase(),
+    style = MaterialTheme.typography.labelSmall,
+    fontWeight = FontWeight.SemiBold,
+    color = contentColor.copy(alpha = ContentAlpha.MEDIUM),
+    maxLines = 1,
+  )
 }
 
 /**

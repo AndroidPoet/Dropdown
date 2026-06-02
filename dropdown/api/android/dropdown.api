@@ -44,6 +44,7 @@ public final class io/androidpoet/dropdown/DropDownKt {
 	public static final fun MenuItemIcon-RPmYEkk (Landroidx/compose/ui/graphics/vector/ImageVector;JLandroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemText-cf5BqRc (Landroidx/compose/ui/Modifier;Ljava/lang/String;JZLandroidx/compose/runtime/Composer;II)V
 	public static final fun ParentItem-ww6aTOc (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;JLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+	public static final fun SectionHeader-RPmYEkk (Ljava/lang/String;JLandroidx/compose/runtime/Composer;I)V
 	public static final fun Space (Landroidx/compose/runtime/Composer;I)V
 	public static final fun getMAX_WIDTH ()F
 }
@@ -56,6 +57,7 @@ public final class io/androidpoet/dropdown/DropDownMenuBuilder {
 	public final fun icon (Landroidx/compose/ui/graphics/vector/ImageVector;)V
 	public final fun item (Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun item$default (Lio/androidpoet/dropdown/DropDownMenuBuilder;Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
+	public final fun section (Ljava/lang/String;)V
 	public final fun setMenu (Lio/androidpoet/dropdown/MenuItem;)V
 }
 
@@ -173,5 +175,13 @@ public final class io/androidpoet/dropdown/MenuItem : io/androidpoet/dropdown/IM
 	public final fun setChildren (Ljava/util/List;)V
 	public final fun setIcon (Landroidx/compose/ui/graphics/vector/ImageVector;)V
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/androidpoet/dropdown/SectionHeaderItem : io/androidpoet/dropdown/IMenuItem {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Lio/androidpoet/dropdown/MenuItem;)V
+	public synthetic fun <init> (Ljava/lang/String;Lio/androidpoet/dropdown/MenuItem;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getParent ()Lio/androidpoet/dropdown/MenuItem;
+	public final fun getTitle ()Ljava/lang/String;
 }
 
