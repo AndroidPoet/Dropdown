@@ -77,8 +77,6 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-private enum class NavigationDirection { Forward, Backward }
-
 private val LocalItemContentPadding = staticCompositionLocalOf<PaddingValues?> { null }
 private val LocalCompactMode = staticCompositionLocalOf { false }
 
@@ -114,10 +112,6 @@ public fun <T : Any> Dropdown(
   placement: MenuPlacement = MenuPlacement.Down,
   enter: EnterAnimation = EnterAnimation.FadeIn,
   exit: ExitAnimation = ExitAnimation.FadeOut,
-  childEnterAnimation: EnterAnimation? = null,
-  childExitAnimation: ExitAnimation? = null,
-  parentEnterAnimation: EnterAnimation? = null,
-  parentExitAnimation: ExitAnimation? = null,
   easing: Easing = Easing.FastOutLinearInEasing,
   enterDuration: Int = 500,
   exitDuration: Int = 500,
@@ -132,7 +126,6 @@ public fun <T : Any> Dropdown(
   var currentMenu by remember(menu, isOpen) { mutableStateOf(menu) }
   var searchQuery by remember { mutableStateOf("") }
   var focusedIndex by remember { mutableStateOf(0) }
-  var navigationDirection by remember { mutableStateOf(NavigationDirection.Forward) }
 
   val finalModifier = modifier.width(width).background(colors.backgroundColor)
 
@@ -169,50 +162,38 @@ public fun <T : Any> Dropdown(
         )
       }
       AnimatedContent(targetState = currentMenu, transitionSpec = {
-      val actualEnter = if (navigationDirection == NavigationDirection.Forward) {
-        childEnterAnimation ?: enter
-      } else {
-        parentEnterAnimation ?: enter
+        animateContent(
+          AnimationProp(
+            enterDuration = enterDuration,
+            exitDuration = exitDuration,
+            delay = 0,
+            easing = easing,
+          ),
+          enterAnimation = enter,
+          exitAnimation = exit,
+        )
+      }) { targetMenu ->
+        DropdownContent(
+          targetMenu = targetMenu,
+          searchQuery = searchQuery,
+          onItemSelected = onItemSelected,
+          colors = colors,
+          width = width,
+          focusedIndex = focusedIndex,
+          onFocusedIndexChange = { focusedIndex = it },
+          onParentClick = {
+            focusedIndex = 0
+            currentMenu =
+              targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
+          },
+          onChildClick = { id ->
+            searchQuery = ""
+            focusedIndex = 0
+            val child = targetMenu.getChild(id)
+            currentMenu = child ?: throw IllegalStateException("Invalid item id: $id")
+          },
+        )
       }
-      val actualExit = if (navigationDirection == NavigationDirection.Forward) {
-        childExitAnimation ?: exit
-      } else {
-        parentExitAnimation ?: exit
-      }
-      animateContent(
-        AnimationProp(
-          enterDuration = enterDuration,
-          exitDuration = exitDuration,
-          delay = 0,
-          easing = easing,
-        ),
-        enterAnimation = actualEnter,
-        exitAnimation = actualExit,
-      )
-    }) { targetMenu ->
-      DropdownContent(
-        targetMenu = targetMenu,
-        searchQuery = searchQuery,
-        onItemSelected = onItemSelected,
-        colors = colors,
-        width = width,
-        focusedIndex = focusedIndex,
-        onFocusedIndexChange = { focusedIndex = it },
-        onParentClick = {
-          navigationDirection = NavigationDirection.Backward
-          focusedIndex = 0
-          currentMenu =
-            targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
-        },
-        onChildClick = { id ->
-          navigationDirection = NavigationDirection.Forward
-          searchQuery = ""
-          focusedIndex = 0
-          val child = targetMenu.getChild(id)
-          currentMenu = child ?: throw IllegalStateException("Invalid item id: $id")
-        },
-      )
-    }
     }
   }
 }

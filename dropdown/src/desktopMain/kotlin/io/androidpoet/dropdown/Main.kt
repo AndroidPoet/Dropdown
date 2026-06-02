@@ -21,7 +21,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Article
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.ContentPaste
@@ -67,7 +67,7 @@ private fun SimpleCascadeDemo() {
   val menu = remember {
     dropDownMenu<String> {
       item("new", "New File") {
-        icon(Icons.Default.Article)
+        icon(Icons.Default.Add)
       }
       item("open", "Open") {
         icon(Icons.Default.FileOpen)
@@ -131,8 +131,6 @@ private fun SimpleCascadeDemo() {
         onDismiss = { isOpen = false },
         placement = MenuPlacement.Down,
         width = 200.dp,
-        childEnterAnimation = EnterAnimation.SlideInHorizontally,
-        parentExitAnimation = ExitAnimation.SlideOutHorizontally,
       )
     }
   }
