@@ -50,6 +50,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 
+private enum class NavigationDirection { Forward, Backward }
+
 /**
  * [Dropdown] is a DropdownMenu wrapper class to add cascade effect and animations.
  *
@@ -58,8 +60,12 @@ import androidx.compose.ui.unit.dp
  * @param menu Represents the menu items to be displayed in the dropdown.
  * @param colors Specifies the colors for the dropdown menu.
  * @param offset Defines the offset of the dropdown from its default position.
- * @param enter The enter animation for the dropdown content.
- * @param exit The exit animation for the dropdown content.
+ * @param enter The enter animation for the dropdown content (used for both directions if child/parent not specified).
+ * @param exit The exit animation for the dropdown content (used for both directions if child/parent not specified).
+ * @param childEnterAnimation Animation when navigating forward into a child sub-menu.
+ * @param childExitAnimation Animation when exiting a child sub-menu (navigating forward out).
+ * @param parentEnterAnimation Animation when navigating backward to a parent menu.
+ * @param parentExitAnimation Animation when exiting a parent menu (navigating backward out).
  * @param easing The easing function for the animation.
  * @param enterDuration The duration for the enter animation.
  * @param exitDuration The duration for the exit animation.
@@ -76,6 +82,10 @@ public fun <T : Any> Dropdown(
   offset: DpOffset = DpOffset.Zero,
   enter: EnterAnimation = EnterAnimation.FadeIn,
   exit: ExitAnimation = ExitAnimation.FadeOut,
+  childEnterAnimation: EnterAnimation? = null,
+  childExitAnimation: ExitAnimation? = null,
+  parentEnterAnimation: EnterAnimation? = null,
+  parentExitAnimation: ExitAnimation? = null,
   easing: Easing = Easing.FastOutLinearInEasing,
   enterDuration: Int = 500,
   exitDuration: Int = 500,
@@ -84,6 +94,7 @@ public fun <T : Any> Dropdown(
   onDismiss: () -> Unit,
 ) {
   var currentMenu by remember(menu, isOpen) { mutableStateOf(menu) }
+  var navigationDirection by remember { mutableStateOf(NavigationDirection.Forward) }
 
   DropdownMenu(
     modifier = modifier.width(width).background(colors.backgroundColor),
@@ -92,6 +103,16 @@ public fun <T : Any> Dropdown(
     offset = offset,
   ) {
     AnimatedContent(targetState = currentMenu, transitionSpec = {
+      val actualEnter = if (navigationDirection == NavigationDirection.Forward) {
+        childEnterAnimation ?: enter
+      } else {
+        parentEnterAnimation ?: enter
+      }
+      val actualExit = if (navigationDirection == NavigationDirection.Forward) {
+        childExitAnimation ?: exit
+      } else {
+        parentExitAnimation ?: exit
+      }
       animateContent(
         AnimationProp(
           enterDuration = enterDuration,
@@ -99,8 +120,8 @@ public fun <T : Any> Dropdown(
           delay = 0,
           easing = easing,
         ),
-        enterAnimation = enter,
-        exitAnimation = exit,
+        enterAnimation = actualEnter,
+        exitAnimation = actualExit,
       )
     }) { targetMenu ->
       DropdownContent(
@@ -109,10 +130,12 @@ public fun <T : Any> Dropdown(
         colors = colors,
         width = width,
         onParentClick = {
+          navigationDirection = NavigationDirection.Backward
           currentMenu =
             targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
         },
         onChildClick = { id ->
+          navigationDirection = NavigationDirection.Forward
           val child = targetMenu.getChild(id)
           currentMenu = child ?: throw IllegalStateException("Invalid item id: $id")
         },
