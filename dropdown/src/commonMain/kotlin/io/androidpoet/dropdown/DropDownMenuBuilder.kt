@@ -35,6 +35,7 @@ public data class MenuItem<T : Any>(
   val id: T? = null,
   val title: String = "",
   override val parent: MenuItem<T>? = null,
+  val enabled: Boolean = true,
 ) : IMenuItem<T> {
   var icon: ImageVector? = null
   var children: MutableList<IMenuItem<T>>? = null // Note: Changed to IMenuItem
@@ -65,9 +66,10 @@ public class DropDownMenuBuilder<T : Any> {
   public fun item(
     id: T,
     title: String,
+    enabled: Boolean = true,
     init: (DropDownMenuBuilder<T>.() -> Unit)? = null,
   ) {
-    val newItem = MenuItem<T>(id, title, menu)
+    val newItem = MenuItem<T>(id, title, menu, enabled)
 
     init?.invoke(DropDownMenuBuilder<T>().apply { menu = newItem })
 
