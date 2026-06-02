@@ -164,8 +164,8 @@ public fun <T : Any> DropdownContent(
                 id = menuItem.id,
                 title = menuItem.title,
                 icon = menuItem.icon,
-                badge = menuItem.badge,
                 contentColor = colors.contentColor,
+                customContent = menuItem.customContent,
                 onClick = { id ->
                   if (id != null) {
                     onChildClick(id)
@@ -177,8 +177,8 @@ public fun <T : Any> DropdownContent(
                 id = menuItem.id,
                 title = menuItem.title,
                 icon = menuItem.icon,
-                badge = menuItem.badge,
                 contentColor = colors.contentColor,
+                customContent = menuItem.customContent,
                 onClick = onItemSelected,
               )
             }
@@ -387,7 +387,7 @@ public fun CascadeHeaderItem(
  * @param icon The icon for the parent item.
  * @param badge Optional numeric badge to display on the item.
  * @param contentColor The color of the content.
- * @param enabled Whether this item is enabled.
+ * @param customContent Optional custom composable content for this item.
  * @param onClick Callback for when the parent item is clicked.
  */
 @Composable
@@ -398,7 +398,7 @@ public fun <T> ParentItem(
   icon: ImageVector?,
   badge: Int? = null,
   contentColor: Color,
-  enabled: Boolean = true,
+  customContent: (@Composable RowScope.() -> Unit)? = null,
   onClick: (T) -> Unit,
 ) {
   val layoutDirection = LocalLayoutDirection.current
@@ -408,17 +408,21 @@ public fun <T> ParentItem(
     Icons.AutoMirrored.Rounded.ArrowLeft
   }
   MenuItem(onClick = { onClick(id) }) {
-    if (icon != null) {
-      MenuItemIcon(icon = icon, tint = contentColor.copy(alpha = alpha))
+    if (customContent != null) {
+      customContent()
+    } else {
+      if (icon != null) {
+        MenuItemIcon(icon = icon, tint = contentColor)
+        Space()
+      }
+      MenuItemText(
+        modifier = Modifier.weight(1f),
+        text = title,
+        color = contentColor,
+      )
       Space()
+      MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
     }
-    MenuItemText(
-      modifier = Modifier.weight(1f),
-      text = title,
-      color = contentColor,
-    )
-    Space()
-    MenuItemIcon(icon = forwardIcon, tint = contentColor)
   }
 }
 
@@ -431,7 +435,7 @@ public fun <T> ParentItem(
  * @param icon The icon for the child item.
  * @param badge Optional numeric badge to display on the item.
  * @param contentColor The color of the content.
- * @param enabled Whether this item is enabled.
+ * @param customContent Optional custom composable content for this item.
  * @param onClick Callback for when the child item is clicked.
  */
 @Composable
@@ -442,26 +446,22 @@ public fun <T> ChildItem(
   icon: ImageVector?,
   badge: Int? = null,
   contentColor: Color,
-  enabled: Boolean = true,
+  customContent: (@Composable RowScope.() -> Unit)? = null,
   onClick: (T) -> Unit,
 ) {
-  val alpha = if (enabled) 1f else ContentAlpha.DISABLED
-  MenuItem(
-    onClick = { if (enabled) onClick(id) },
-    enabled = enabled,
-  ) {
-    if (icon != null) {
-      MenuItemIcon(icon = icon, tint = contentColor.copy(alpha = alpha))
-      Space()
-    }
-    MenuItemText(
-      modifier = Modifier.weight(1f),
-      text = title,
-      color = contentColor,
-    )
-    if (badge != null) {
-      Spacer(modifier = Modifier.width(8.dp))
-      MenuItemBadge(count = badge, tint = contentColor)
+  MenuItem(onClick = { onClick(id) }) {
+    if (customContent != null) {
+      customContent()
+    } else {
+      if (icon != null) {
+        MenuItemIcon(icon = icon, tint = contentColor)
+        Space()
+      }
+      MenuItemText(
+        modifier = Modifier.weight(1f),
+        text = title,
+        color = contentColor,
+      )
     }
   }
 }

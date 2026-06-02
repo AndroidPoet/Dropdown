@@ -15,6 +15,8 @@
  */
 package io.androidpoet.dropdown
 
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 
 @DslMarker
@@ -45,7 +47,7 @@ public data class MenuItem<T : Any>(
   val enabled: Boolean = true,
 ) : IMenuItem<T> {
   var icon: ImageVector? = null
-  var badge: Int? = null
+  var customContent: (@Composable RowScope.() -> Unit)? = null
   var children: MutableList<IMenuItem<T>>? = null // Note: Changed to IMenuItem
 
   public fun hasChildren(): Boolean = !children.isNullOrEmpty()
@@ -64,8 +66,8 @@ public class DropDownMenuBuilder<T : Any> {
     menu.icon = value
   }
 
-  public fun badge(value: Int) {
-    menu.badge = value
+  public fun content(value: @Composable RowScope.() -> Unit) {
+    menu.customContent = value
   }
 
   public fun horizontalDivider() {
