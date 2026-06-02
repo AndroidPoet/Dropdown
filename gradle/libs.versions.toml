@@ -13,7 +13,7 @@ baselineProfiles = "1.4.1"
 uiAutomator = "2.3.0"
 spotless = "6.25.0"
 androidxMacroBenchmark = "1.4.1"
-jetbrains-compose = "1.10.3"
+jetbrains-compose = "1.11.1"
 composeIcons = "1.1.1"
 
 [plugins]
