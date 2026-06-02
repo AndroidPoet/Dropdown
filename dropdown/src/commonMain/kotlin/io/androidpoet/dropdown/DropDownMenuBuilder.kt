@@ -19,6 +19,15 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 
+public enum class SelectMode {
+  /** Item is not selectable. */
+  None,
+  /** Single-select (radio button style). */
+  Single,
+  /** Multi-select (checkbox style). */
+  Multi,
+}
+
 @DslMarker
 public annotation class MenuDSL
 
@@ -47,7 +56,8 @@ public data class MenuItem<T : Any>(
   val enabled: Boolean = true,
 ) : IMenuItem<T> {
   var icon: ImageVector? = null
-  var customContent: (@Composable RowScope.() -> Unit)? = null
+  var selectable: SelectMode = SelectMode.None
+  var selected: Boolean = false
   var children: MutableList<IMenuItem<T>>? = null // Note: Changed to IMenuItem
 
   public fun hasChildren(): Boolean = !children.isNullOrEmpty()
@@ -66,8 +76,9 @@ public class DropDownMenuBuilder<T : Any> {
     menu.icon = value
   }
 
-  public fun content(value: @Composable RowScope.() -> Unit) {
-    menu.customContent = value
+  public fun selectable(mode: SelectMode, selected: Boolean = false) {
+    menu.selectable = mode
+    menu.selected = selected
   }
 
   public fun horizontalDivider() {

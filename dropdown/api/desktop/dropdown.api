@@ -37,14 +37,14 @@ public final class io/androidpoet/dropdown/Divider : io/androidpoet/dropdown/IMe
 
 public final class io/androidpoet/dropdown/DropDownKt {
 	public static final fun CascadeHeaderItem-iJQMabo (Ljava/lang/String;JLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
-	public static final fun ChildItem-ww6aTOc (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;JLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+	public static final fun ChildItem-cd68TDI (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;Lio/androidpoet/dropdown/SelectMode;ZJLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun Dropdown-dJ089pE (Landroidx/compose/ui/Modifier;ZLio/androidpoet/dropdown/MenuItem;Lio/androidpoet/dropdown/DropDownMenuColors;JLio/androidpoet/dropdown/EnterAnimation;Lio/androidpoet/dropdown/ExitAnimation;Lio/androidpoet/dropdown/Easing;IIFLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
 	public static final fun DropdownContent-0vH8DBg (Lio/androidpoet/dropdown/MenuItem;ILkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lio/androidpoet/dropdown/DropDownMenuColors;Lkotlin/jvm/functions/Function0;FLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun MenuItem (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemBadge-RPmYEkk (IJLandroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemIcon-RPmYEkk (Landroidx/compose/ui/graphics/vector/ImageVector;JLandroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemText-cf5BqRc (Landroidx/compose/ui/Modifier;Ljava/lang/String;JZLandroidx/compose/runtime/Composer;II)V
-	public static final fun ParentItem-fWhpE4E (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;JLkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun ParentItem-cd68TDI (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;Lio/androidpoet/dropdown/SelectMode;ZJLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun Space (Landroidx/compose/runtime/Composer;I)V
 	public static final fun getMAX_WIDTH ()F
 }
@@ -58,7 +58,8 @@ public final class io/androidpoet/dropdown/DropDownMenuBuilder {
 	public final fun icon (Landroidx/compose/ui/graphics/vector/ImageVector;)V
 	public final fun item (Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)V
 	public static synthetic fun item$default (Lio/androidpoet/dropdown/DropDownMenuBuilder;Ljava/lang/Object;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)V
-	public final fun section (Ljava/lang/String;)V
+	public final fun selectable (Lio/androidpoet/dropdown/SelectMode;Z)V
+	public static synthetic fun selectable$default (Lio/androidpoet/dropdown/DropDownMenuBuilder;Lio/androidpoet/dropdown/SelectMode;ZILjava/lang/Object;)V
 	public final fun setMenu (Lio/androidpoet/dropdown/MenuItem;)V
 	public final fun subtitle (Ljava/lang/String;)V
 }
@@ -181,7 +182,8 @@ public final class io/androidpoet/dropdown/MenuItem : io/androidpoet/dropdown/IM
 	public final fun getIcon ()Landroidx/compose/ui/graphics/vector/ImageVector;
 	public final fun getId ()Ljava/lang/Object;
 	public fun getParent ()Lio/androidpoet/dropdown/MenuItem;
-	public final fun getSubtitle ()Ljava/lang/String;
+	public final fun getSelectable ()Lio/androidpoet/dropdown/SelectMode;
+	public final fun getSelected ()Z
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun hasChildren ()Z
 	public final fun hasParent ()Z
@@ -190,15 +192,17 @@ public final class io/androidpoet/dropdown/MenuItem : io/androidpoet/dropdown/IM
 	public final fun setChildren (Ljava/util/List;)V
 	public final fun setCustomContent (Lkotlin/jvm/functions/Function3;)V
 	public final fun setIcon (Landroidx/compose/ui/graphics/vector/ImageVector;)V
-	public final fun setSubtitle (Ljava/lang/String;)V
+	public final fun setSelectable (Lio/androidpoet/dropdown/SelectMode;)V
+	public final fun setSelected (Z)V
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/androidpoet/dropdown/SectionHeaderItem : io/androidpoet/dropdown/IMenuItem {
-	public static final field $stable I
-	public fun <init> (Ljava/lang/String;Lio/androidpoet/dropdown/MenuItem;)V
-	public synthetic fun <init> (Ljava/lang/String;Lio/androidpoet/dropdown/MenuItem;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun getParent ()Lio/androidpoet/dropdown/MenuItem;
-	public final fun getTitle ()Ljava/lang/String;
+public final class io/androidpoet/dropdown/SelectMode : java/lang/Enum {
+	public static final field Multi Lio/androidpoet/dropdown/SelectMode;
+	public static final field None Lio/androidpoet/dropdown/SelectMode;
+	public static final field Single Lio/androidpoet/dropdown/SelectMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/androidpoet/dropdown/SelectMode;
+	public static fun values ()[Lio/androidpoet/dropdown/SelectMode;
 }
 
