@@ -21,13 +21,16 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.ArrowRight
@@ -48,9 +51,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 /**
  * [Dropdown] is a DropdownMenu wrapper class to add cascade effect and animations.
@@ -158,8 +163,8 @@ public fun <T : Any> DropdownContent(
               ParentItem(
                 id = menuItem.id,
                 title = menuItem.title,
-                subtitle = menuItem.subtitle,
                 icon = menuItem.icon,
+                badge = menuItem.badge,
                 contentColor = colors.contentColor,
                 onClick = { id ->
                   if (id != null) {
@@ -171,8 +176,8 @@ public fun <T : Any> DropdownContent(
               ChildItem(
                 id = menuItem.id,
                 title = menuItem.title,
-                subtitle = menuItem.subtitle,
                 icon = menuItem.icon,
+                badge = menuItem.badge,
                 contentColor = colors.contentColor,
                 onClick = onItemSelected,
               )
@@ -249,6 +254,38 @@ public fun MenuItemText(
 }
 
 /**
+ * Displays a numeric badge indicator for a MenuItem.
+ *
+ * @param count The number to display in the badge.
+ * @param tint The color of the badge text and background.
+ */
+@Composable
+public fun MenuItemBadge(
+  count: Int,
+  tint: Color,
+) {
+  val badgeText = if (count > 99) "99+" else count.toString()
+  Box(
+    modifier = Modifier
+      .size(20.dp)
+      .background(
+        color = tint.copy(alpha = 0.15f),
+        shape = CircleShape,
+      ),
+    contentAlignment = Alignment.Center,
+  ) {
+    Text(
+      text = badgeText,
+      style = MaterialTheme.typography.labelSmall,
+      fontSize = 10.sp,
+      fontWeight = FontWeight.Bold,
+      color = tint,
+      textAlign = TextAlign.Center,
+    )
+  }
+}
+
+/**
  * Wrapper for handling onClick and user interaction for a dropdown MenuItem.
  *
  * @param onClick Callback for when the MenuItem is clicked.
@@ -312,6 +349,7 @@ public fun CascadeHeaderItem(
  * @param title The title of the parent item.
  * @param subtitle Optional secondary text displayed below the title.
  * @param icon The icon for the parent item.
+ * @param badge Optional numeric badge to display on the item.
  * @param contentColor The color of the content.
  * @param enabled Whether this item is enabled.
  * @param onClick Callback for when the parent item is clicked.
@@ -322,6 +360,7 @@ public fun <T> ParentItem(
   title: String,
   subtitle: String? = null,
   icon: ImageVector?,
+  badge: Int? = null,
   contentColor: Color,
   enabled: Boolean = true,
   onClick: (T) -> Unit,
@@ -335,23 +374,17 @@ public fun <T> ParentItem(
       MenuItemIcon(icon = icon, tint = contentColor.copy(alpha = alpha))
       Space()
     }
-    Column(modifier = Modifier.weight(1f)) {
-      MenuItemText(
-        modifier = Modifier,
-        text = title,
-        color = contentColor,
-      )
-      if (subtitle != null) {
-        Text(
-          text = subtitle,
-          style = MaterialTheme.typography.labelSmall,
-          color = contentColor.copy(alpha = ContentAlpha.MEDIUM),
-          fontWeight = FontWeight.Normal,
-        )
-      }
+    MenuItemText(
+      modifier = Modifier.weight(1f),
+      text = title,
+      color = contentColor,
+    )
+    if (badge != null) {
+      Spacer(modifier = Modifier.width(8.dp))
+      MenuItemBadge(count = badge, tint = contentColor)
+      Space()
     }
-    Space()
-    MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor.copy(alpha = alpha))
+    MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
   }
 }
 
@@ -362,6 +395,7 @@ public fun <T> ParentItem(
  * @param title The title of the child item.
  * @param subtitle Optional secondary text displayed below the title.
  * @param icon The icon for the child item.
+ * @param badge Optional numeric badge to display on the item.
  * @param contentColor The color of the content.
  * @param enabled Whether this item is enabled.
  * @param onClick Callback for when the child item is clicked.
@@ -372,6 +406,7 @@ public fun <T> ChildItem(
   title: String,
   subtitle: String? = null,
   icon: ImageVector?,
+  badge: Int? = null,
   contentColor: Color,
   enabled: Boolean = true,
   onClick: (T) -> Unit,
@@ -385,20 +420,14 @@ public fun <T> ChildItem(
       MenuItemIcon(icon = icon, tint = contentColor.copy(alpha = alpha))
       Space()
     }
-    Column(modifier = Modifier.weight(1f)) {
-      MenuItemText(
-        modifier = Modifier,
-        text = title,
-        color = contentColor,
-      )
-      if (subtitle != null) {
-        Text(
-          text = subtitle,
-          style = MaterialTheme.typography.labelSmall,
-          color = contentColor.copy(alpha = ContentAlpha.MEDIUM),
-          fontWeight = FontWeight.Normal,
-        )
-      }
+    MenuItemText(
+      modifier = Modifier.weight(1f),
+      text = title,
+      color = contentColor,
+    )
+    if (badge != null) {
+      Spacer(modifier = Modifier.width(8.dp))
+      MenuItemBadge(count = badge, tint = contentColor)
     }
   }
 }
