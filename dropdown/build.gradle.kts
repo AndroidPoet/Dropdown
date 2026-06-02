@@ -98,12 +98,22 @@ kotlin {
         implementation(libs.composeIcons.featherIcons)
       }
     }
+    val desktopMain by getting {
+      dependencies {
+        implementation(compose.desktop.currentOs)
+      }
+    }
   }
 
   explicitApi()
 }
 composeCompiler {
   enableStrongSkippingMode = true
+}
+compose.desktop {
+  application {
+    mainClass = "io.androidpoet.dropdown.MainKt"
+  }
 }
 android {
   compileSdk = Configuration.compileSdk

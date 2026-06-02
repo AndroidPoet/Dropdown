@@ -19,6 +19,16 @@ public final class io/androidpoet/dropdown/AnimationProp {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class io/androidpoet/dropdown/ComposableSingletons$MainKt {
+	public static final field INSTANCE Lio/androidpoet/dropdown/ComposableSingletons$MainKt;
+	public fun <init> ()V
+	public final fun getLambda$-1155563512$dropdown ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-135774246$dropdown ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$-1686966866$dropdown ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda$301416267$dropdown ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda$719474035$dropdown ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class io/androidpoet/dropdown/ContentAlpha {
 	public static final field $stable I
 	public static final field DISABLED F
@@ -154,6 +164,11 @@ public final class io/androidpoet/dropdown/ExitAnimationKt {
 
 public abstract interface class io/androidpoet/dropdown/IMenuItem {
 	public abstract fun getParent ()Lio/androidpoet/dropdown/MenuItem;
+}
+
+public final class io/androidpoet/dropdown/MainKt {
+	public static final fun main ()V
+	public static synthetic fun main ([Ljava/lang/String;)V
 }
 
 public final class io/androidpoet/dropdown/MenuColorsKt {
