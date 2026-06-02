@@ -26,16 +26,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.ArrowRight
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -63,6 +68,8 @@ import androidx.compose.ui.unit.dp
  * @param easing The easing function for the animation.
  * @param enterDuration The duration for the enter animation.
  * @param exitDuration The duration for the exit animation.
+ * @param searchable If true, shows a search field at the top of the dropdown.
+ * @param searchPlaceholder Placeholder text for the search field.
  * @param onItemSelected Callback triggered when an item is selected in the dropdown.
  * @param onDismiss Callback executed when the dropdown is dismissed or closed.
  */
@@ -80,10 +87,13 @@ public fun <T : Any> Dropdown(
   enterDuration: Int = 500,
   exitDuration: Int = 500,
   width: Dp = MAX_WIDTH,
+  searchable: Boolean = false,
+  searchPlaceholder: String = "Search",
   onItemSelected: (T?) -> Unit,
   onDismiss: () -> Unit,
 ) {
   var currentMenu by remember(menu, isOpen) { mutableStateOf(menu) }
+  var searchQuery by remember { mutableStateOf("") }
 
   DropdownMenu(
     modifier = modifier.width(width).background(colors.backgroundColor),
@@ -91,6 +101,14 @@ public fun <T : Any> Dropdown(
     onDismissRequest = { onDismiss() },
     offset = offset,
   ) {
+    if (searchable) {
+      SearchHeader(
+        query = searchQuery,
+        onQueryChange = { searchQuery = it },
+        placeholder = searchPlaceholder,
+        colors = colors,
+      )
+    }
     AnimatedContent(targetState = currentMenu, transitionSpec = {
       animateContent(
         AnimationProp(
@@ -105,6 +123,7 @@ public fun <T : Any> Dropdown(
     }) { targetMenu ->
       DropdownContent(
         targetMenu = targetMenu,
+        searchQuery = searchQuery,
         onItemSelected = onItemSelected,
         colors = colors,
         width = width,
@@ -113,6 +132,7 @@ public fun <T : Any> Dropdown(
             targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
         },
         onChildClick = { id ->
+          searchQuery = ""
           val child = targetMenu.getChild(id)
           currentMenu = child ?: throw IllegalStateException("Invalid item id: $id")
         },
@@ -122,9 +142,42 @@ public fun <T : Any> Dropdown(
 }
 
 /**
+ * A search header composable for filtering dropdown items.
+ */
+@Composable
+internal fun SearchHeader(
+  query: String,
+  onQueryChange: (String) -> Unit,
+  placeholder: String,
+  colors: DropDownMenuColors,
+) {
+  OutlinedTextField(
+    value = query,
+    onValueChange = onQueryChange,
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(horizontal = 8.dp, vertical = 4.dp),
+    placeholder = { Text(placeholder) },
+    leadingIcon = {
+      Icon(Icons.Filled.Search, contentDescription = null, tint = colors.contentColor)
+    },
+    singleLine = true,
+    shape = RoundedCornerShape(8.dp),
+    colors = OutlinedTextFieldDefaults.colors(
+      focusedTextColor = colors.contentColor,
+      unfocusedTextColor = colors.contentColor,
+      cursorColor = colors.contentColor,
+      focusedBorderColor = colors.contentColor.copy(alpha = 0.5f),
+      unfocusedBorderColor = colors.contentColor.copy(alpha = 0.2f),
+    ),
+  )
+}
+
+/**
  * Represents menu content properties for a dropdown menu.
  *
  * @param targetMenu The MenuItem representing the dropdown menu.
+ * @param searchQuery The current search query for filtering items.
  * @param onItemSelected Callback for when an item is selected.
  * @param colors Dropdown menu colors.
  * @param onParentClick Callback for when the parent item is clicked.
@@ -134,6 +187,7 @@ public fun <T : Any> Dropdown(
 @Composable
 public fun <T : Any> DropdownContent(
   targetMenu: MenuItem<T>,
+  searchQuery: String = "",
   onItemSelected: (T?) -> Unit,
   colors: DropDownMenuColors,
   onParentClick: () -> Unit,
@@ -149,15 +203,25 @@ public fun <T : Any> DropdownContent(
       )
     }
     if (targetMenu.hasChildren()) {
-      targetMenu.children?.forEach { menuItem ->
+      val visibleItems = if (searchQuery.isBlank()) {
+        targetMenu.children
+      } else {
+        targetMenu.children?.filter { item ->
+          when (item) {
+            is MenuItem -> item.title.contains(searchQuery, ignoreCase = true)
+            else -> true
+          }
+        }
+      }
+      visibleItems?.forEach { menuItem ->
         when (menuItem) {
           is MenuItem -> {
             if (menuItem.hasChildren()) {
               ParentItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
+                id = menuItem.id,
+                title = menuItem.title,
+                icon = menuItem.icon,
+                contentColor = colors.contentColor,
                 onClick = { id ->
                   if (id != null) {
                     onChildClick(id)
@@ -166,11 +230,11 @@ public fun <T : Any> DropdownContent(
               )
             } else {
               ChildItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
-                onItemSelected,
+                id = menuItem.id,
+                title = menuItem.title,
+                icon = menuItem.icon,
+                contentColor = colors.contentColor,
+                onClick = onItemSelected,
               )
             }
           }
