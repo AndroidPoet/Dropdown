@@ -31,7 +31,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.ArrowRight
@@ -51,9 +52,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.LayoutDirection
@@ -109,16 +117,7 @@ public fun <T : Any> Dropdown(
   onDismiss: () -> Unit,
 ) {
   var currentMenu by remember(menu, isOpen) { mutableStateOf(menu) }
-  var navigationDirection by remember { mutableStateOf(NavigationDirection.Forward) }
-
-  val finalModifier = if (maxVisibleItems != null) {
-    val estimatedItemHeight = 48.dp
-    modifier.width(width)
-      .heightIn(max = estimatedItemHeight * maxVisibleItems)
-      .background(colors.backgroundColor)
-  } else {
-    modifier.width(width).background(colors.backgroundColor)
-  }
+  var focusedIndex by remember { mutableStateOf(0) }
 
   DropdownMenu(
     modifier = finalModifier,
@@ -148,25 +147,24 @@ public fun <T : Any> Dropdown(
         exitAnimation = actualExit,
       )
     }) { targetMenu ->
-      CompositionLocalProvider(
-        LocalCompactMode provides compact,
-        LocalItemContentPadding provides contentPadding,
-      ) {
-        DropdownContent(
-          targetMenu = targetMenu,
-          onItemSelected = onItemSelected,
-          colors = colors,
-          width = width,
-          onParentClick = {
-            currentMenu =
-              targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
-          },
-          onChildClick = { id ->
-            val child = targetMenu.getChild(id)
-            currentMenu = child ?: throw IllegalStateException("Invalid item id: $id")
-          },
-        )
-      }
+      DropdownContent(
+        targetMenu = targetMenu,
+        focusedIndex = focusedIndex,
+        onFocusedIndexChange = { focusedIndex = it },
+        onItemSelected = onItemSelected,
+        colors = colors,
+        width = width,
+        onParentClick = {
+          focusedIndex = 0
+          currentMenu =
+            targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
+        },
+        onChildClick = { id ->
+          focusedIndex = 0
+          val child = targetMenu.getChild(id)
+          currentMenu = child ?: throw IllegalStateException("Invalid item id: $id")
+        },
+      )
     }
   }
 }
@@ -175,6 +173,8 @@ public fun <T : Any> Dropdown(
  * Represents menu content properties for a dropdown menu.
  *
  * @param targetMenu The MenuItem representing the dropdown menu.
+ * @param focusedIndex The index of the currently focused item.
+ * @param onFocusedIndexChange Callback when the focused index changes.
  * @param onItemSelected Callback for when an item is selected.
  * @param colors Dropdown menu colors.
  * @param onParentClick Callback for when the parent item is clicked.
@@ -186,13 +186,64 @@ public fun <T : Any> Dropdown(
 @Composable
 public fun <T : Any> DropdownContent(
   targetMenu: MenuItem<T>,
+  focusedIndex: Int = 0,
+  onFocusedIndexChange: (Int) -> Unit = {},
   onItemSelected: (T?) -> Unit,
   colors: DropDownMenuColors,
   onParentClick: () -> Unit,
   width: Dp,
   onChildClick: (T) -> Unit,
 ) {
-  Column(modifier = Modifier.width(width)) {
+  val items = remember(targetMenu) {
+    targetMenu.children?.filterIsInstance<MenuItem<T>>().orEmpty()
+  }
+  Column(
+    modifier = Modifier
+      .width(width)
+      .onKeyEvent { event ->
+        when (event.key) {
+          Key.DirectionDown -> {
+            if (focusedIndex < items.size - 1) {
+              onFocusedIndexChange(focusedIndex + 1)
+            }
+            true
+          }
+          Key.DirectionUp -> {
+            if (focusedIndex > 0) {
+              onFocusedIndexChange(focusedIndex - 1)
+            }
+            true
+          }
+          Key.Enter -> {
+            if (items.isNotEmpty() && focusedIndex < items.size) {
+              val item = items[focusedIndex]
+              if (item.hasChildren()) {
+                onChildClick(item.id ?: return@onKeyEvent true)
+              } else {
+                onItemSelected(item.id)
+              }
+            }
+            true
+          }
+          Key.DirectionRight -> {
+            if (items.isNotEmpty() && focusedIndex < items.size) {
+              val item = items[focusedIndex]
+              if (item.hasChildren()) {
+                onChildClick(item.id ?: return@onKeyEvent true)
+              }
+            }
+            true
+          }
+          Key.DirectionLeft -> {
+            if (targetMenu.hasParent()) {
+              onParentClick()
+            }
+            true
+          }
+          else -> false
+        }
+      },
+  ) {
     if (targetMenu.hasParent()) {
       CascadeHeaderItem(
         targetMenu.title,
