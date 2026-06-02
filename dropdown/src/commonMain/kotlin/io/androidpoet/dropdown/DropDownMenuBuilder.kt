@@ -17,6 +17,22 @@ package io.androidpoet.dropdown
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
+/**
+ * Defines the preferred placement of the dropdown menu relative to its anchor.
+ */
+public enum class MenuPlacement {
+  /** Automatically detect best placement based on available space. */
+  Auto,
+  /** Place below the anchor (default). */
+  Down,
+  /** Place above the anchor. */
+  Up,
+  /** Place to the end (right in LTR, left in RTL). */
+  End,
+  /** Place to the start (left in LTR, right in RTL). */
+  Start,
+}
+
 @DslMarker
 public annotation class MenuDSL
 

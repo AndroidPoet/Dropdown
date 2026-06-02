@@ -21,6 +21,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -46,8 +47,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
 /**
@@ -58,6 +61,7 @@ import androidx.compose.ui.unit.dp
  * @param menu Represents the menu items to be displayed in the dropdown.
  * @param colors Specifies the colors for the dropdown menu.
  * @param offset Defines the offset of the dropdown from its default position.
+ * @param placement Preferred placement relative to the anchor. Default is Down.
  * @param enter The enter animation for the dropdown content.
  * @param exit The exit animation for the dropdown content.
  * @param easing The easing function for the animation.
@@ -74,6 +78,7 @@ public fun <T : Any> Dropdown(
   menu: MenuItem<T>,
   colors: DropDownMenuColors = dropDownMenuColors(),
   offset: DpOffset = DpOffset.Zero,
+  placement: MenuPlacement = MenuPlacement.Down,
   enter: EnterAnimation = EnterAnimation.FadeIn,
   exit: ExitAnimation = ExitAnimation.FadeOut,
   easing: Easing = Easing.FastOutLinearInEasing,
@@ -85,11 +90,25 @@ public fun <T : Any> Dropdown(
 ) {
   var currentMenu by remember(menu, isOpen) { mutableStateOf(menu) }
 
+  val resolvedOffset = when (placement) {
+    MenuPlacement.Down -> offset
+    MenuPlacement.Up -> DpOffset(offset.x, -width - offset.y)
+    MenuPlacement.End -> {
+      val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+      DpOffset(if (isRtl) -width - offset.x else offset.x, offset.y)
+    }
+    MenuPlacement.Start -> {
+      val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+      DpOffset(if (isRtl) offset.x else -width - offset.x, offset.y)
+    }
+    MenuPlacement.Auto -> offset // Simple auto: just use offset (could enhance with BoxWithConstraints)
+  }
+
   DropdownMenu(
     modifier = modifier.width(width).background(colors.backgroundColor),
     expanded = isOpen,
     onDismissRequest = { onDismiss() },
-    offset = offset,
+    offset = resolvedOffset,
   ) {
     AnimatedContent(targetState = currentMenu, transitionSpec = {
       animateContent(

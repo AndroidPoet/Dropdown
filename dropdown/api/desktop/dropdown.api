@@ -38,7 +38,7 @@ public final class io/androidpoet/dropdown/Divider : io/androidpoet/dropdown/IMe
 public final class io/androidpoet/dropdown/DropDownKt {
 	public static final fun CascadeHeaderItem-iJQMabo (Ljava/lang/String;JLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
 	public static final fun ChildItem-ww6aTOc (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;JLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
-	public static final fun Dropdown-dJ089pE (Landroidx/compose/ui/Modifier;ZLio/androidpoet/dropdown/MenuItem;Lio/androidpoet/dropdown/DropDownMenuColors;JLio/androidpoet/dropdown/EnterAnimation;Lio/androidpoet/dropdown/ExitAnimation;Lio/androidpoet/dropdown/Easing;IIFLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
+	public static final fun Dropdown-u0eclSw (Landroidx/compose/ui/Modifier;ZLio/androidpoet/dropdown/MenuItem;Lio/androidpoet/dropdown/DropDownMenuColors;JLio/androidpoet/dropdown/MenuPlacement;Lio/androidpoet/dropdown/EnterAnimation;Lio/androidpoet/dropdown/ExitAnimation;Lio/androidpoet/dropdown/Easing;IIFLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
 	public static final fun DropdownContent-FJfuzF0 (Lio/androidpoet/dropdown/MenuItem;Lkotlin/jvm/functions/Function1;Lio/androidpoet/dropdown/DropDownMenuColors;Lkotlin/jvm/functions/Function0;FLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItem (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemIcon-RPmYEkk (Landroidx/compose/ui/graphics/vector/ImageVector;JLandroidx/compose/runtime/Composer;I)V
@@ -173,5 +173,16 @@ public final class io/androidpoet/dropdown/MenuItem : io/androidpoet/dropdown/IM
 	public final fun setChildren (Ljava/util/List;)V
 	public final fun setIcon (Landroidx/compose/ui/graphics/vector/ImageVector;)V
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/androidpoet/dropdown/MenuPlacement : java/lang/Enum {
+	public static final field Auto Lio/androidpoet/dropdown/MenuPlacement;
+	public static final field Down Lio/androidpoet/dropdown/MenuPlacement;
+	public static final field End Lio/androidpoet/dropdown/MenuPlacement;
+	public static final field Start Lio/androidpoet/dropdown/MenuPlacement;
+	public static final field Up Lio/androidpoet/dropdown/MenuPlacement;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/androidpoet/dropdown/MenuPlacement;
+	public static fun values ()[Lio/androidpoet/dropdown/MenuPlacement;
 }
 
