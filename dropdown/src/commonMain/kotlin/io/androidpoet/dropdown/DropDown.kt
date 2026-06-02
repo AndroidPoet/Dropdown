@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -63,6 +64,7 @@ import androidx.compose.ui.unit.dp
  * @param easing The easing function for the animation.
  * @param enterDuration The duration for the enter animation.
  * @param exitDuration The duration for the exit animation.
+ * @param maxVisibleItems Maximum number of items visible before scrolling. Null means no limit.
  * @param onItemSelected Callback triggered when an item is selected in the dropdown.
  * @param onDismiss Callback executed when the dropdown is dismissed or closed.
  */
@@ -80,13 +82,23 @@ public fun <T : Any> Dropdown(
   enterDuration: Int = 500,
   exitDuration: Int = 500,
   width: Dp = MAX_WIDTH,
+  maxVisibleItems: Int? = null,
   onItemSelected: (T?) -> Unit,
   onDismiss: () -> Unit,
 ) {
   var currentMenu by remember(menu, isOpen) { mutableStateOf(menu) }
 
+  val finalModifier = if (maxVisibleItems != null) {
+    val estimatedItemHeight = 48.dp
+    modifier.width(width)
+      .heightIn(max = estimatedItemHeight * maxVisibleItems)
+      .background(colors.backgroundColor)
+  } else {
+    modifier.width(width).background(colors.backgroundColor)
+  }
+
   DropdownMenu(
-    modifier = modifier.width(width).background(colors.backgroundColor),
+    modifier = finalModifier,
     expanded = isOpen,
     onDismissRequest = { onDismiss() },
     offset = offset,
