@@ -22,6 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -38,10 +39,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,6 +52,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+
+private val LocalItemContentPadding = staticCompositionLocalOf<PaddingValues?> { null }
+private val LocalCompactMode = staticCompositionLocalOf { false }
 
 /**
  * [Dropdown] is a DropdownMenu wrapper class to add cascade effect and animations.
@@ -63,6 +69,8 @@ import androidx.compose.ui.unit.dp
  * @param easing The easing function for the animation.
  * @param enterDuration The duration for the enter animation.
  * @param exitDuration The duration for the exit animation.
+ * @param compact If true, uses reduced padding for a denser layout.
+ * @param contentPadding Custom padding for each menu item. When null, defaults to standard or compact padding.
  * @param onItemSelected Callback triggered when an item is selected in the dropdown.
  * @param onDismiss Callback executed when the dropdown is dismissed or closed.
  */
@@ -80,6 +88,8 @@ public fun <T : Any> Dropdown(
   enterDuration: Int = 500,
   exitDuration: Int = 500,
   width: Dp = MAX_WIDTH,
+  compact: Boolean = false,
+  contentPadding: PaddingValues? = null,
   onItemSelected: (T?) -> Unit,
   onDismiss: () -> Unit,
 ) {
@@ -103,20 +113,25 @@ public fun <T : Any> Dropdown(
         exitAnimation = exit,
       )
     }) { targetMenu ->
-      DropdownContent(
-        targetMenu = targetMenu,
-        onItemSelected = onItemSelected,
-        colors = colors,
-        width = width,
-        onParentClick = {
-          currentMenu =
-            targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
-        },
-        onChildClick = { id ->
-          val child = targetMenu.getChild(id)
-          currentMenu = child ?: throw IllegalStateException("Invalid item id: $id")
-        },
-      )
+      CompositionLocalProvider(
+        LocalCompactMode provides compact,
+        LocalItemContentPadding provides contentPadding,
+      ) {
+        DropdownContent(
+          targetMenu = targetMenu,
+          onItemSelected = onItemSelected,
+          colors = colors,
+          width = width,
+          onParentClick = {
+            currentMenu =
+              targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
+          },
+          onChildClick = { id ->
+            val child = targetMenu.getChild(id)
+            currentMenu = child ?: throw IllegalStateException("Invalid item id: $id")
+          },
+        )
+      }
     }
   }
 }
@@ -129,6 +144,8 @@ public fun <T : Any> Dropdown(
  * @param colors Dropdown menu colors.
  * @param onParentClick Callback for when the parent item is clicked.
  * @param onChildClick Callback for when a child item is clicked.
+ * @param compact If true, uses reduced padding for items.
+ * @param contentPadding Custom padding for each menu item.
  */
 
 @Composable
@@ -255,8 +272,16 @@ public fun MenuItem(
   onClick: () -> Unit,
   content: @Composable RowScope.() -> Unit,
 ) {
+  val compact = LocalCompactMode.current
+  val contentPadding = LocalItemContentPadding.current
+  val padding = contentPadding ?: if (compact) {
+    PaddingValues(horizontal = 8.dp, vertical = 4.dp)
+  } else {
+    PaddingValues(horizontal = 12.dp, vertical = 8.dp)
+  }
   DropdownMenuItem(
     onClick = onClick,
+    contentPadding = padding,
     interactionSource = remember { MutableInteractionSource() },
     text = {
       Row(
