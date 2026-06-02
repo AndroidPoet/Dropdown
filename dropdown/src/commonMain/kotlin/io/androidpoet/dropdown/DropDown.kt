@@ -154,10 +154,11 @@ public fun <T : Any> DropdownContent(
           is MenuItem -> {
             if (menuItem.hasChildren()) {
               ParentItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
+                id = menuItem.id,
+                title = menuItem.title,
+                icon = menuItem.icon,
+                contentColor = colors.contentColor,
+                customContent = menuItem.customContent,
                 onClick = { id ->
                   if (id != null) {
                     onChildClick(id)
@@ -166,11 +167,12 @@ public fun <T : Any> DropdownContent(
               )
             } else {
               ChildItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
-                onItemSelected,
+                id = menuItem.id,
+                title = menuItem.title,
+                icon = menuItem.icon,
+                contentColor = colors.contentColor,
+                customContent = menuItem.customContent,
+                onClick = onItemSelected,
               )
             }
           }
@@ -305,6 +307,7 @@ public fun CascadeHeaderItem(
  * @param title The title of the parent item.
  * @param icon The icon for the parent item.
  * @param contentColor The color of the content.
+ * @param customContent Optional custom composable content for this item.
  * @param onClick Callback for when the parent item is clicked.
  */
 @Composable
@@ -313,20 +316,25 @@ public fun <T> ParentItem(
   title: String,
   icon: ImageVector?,
   contentColor: Color,
+  customContent: (@Composable RowScope.() -> Unit)? = null,
   onClick: (T) -> Unit,
 ) {
   MenuItem(onClick = { onClick(id) }) {
-    if (icon != null) {
-      MenuItemIcon(icon = icon, tint = contentColor)
+    if (customContent != null) {
+      customContent()
+    } else {
+      if (icon != null) {
+        MenuItemIcon(icon = icon, tint = contentColor)
+        Space()
+      }
+      MenuItemText(
+        modifier = Modifier.weight(1f),
+        text = title,
+        color = contentColor,
+      )
       Space()
+      MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
     }
-    MenuItemText(
-      modifier = Modifier.weight(1f),
-      text = title,
-      color = contentColor,
-    )
-    Space()
-    MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
   }
 }
 
@@ -337,6 +345,7 @@ public fun <T> ParentItem(
  * @param title The title of the child item.
  * @param icon The icon for the child item.
  * @param contentColor The color of the content.
+ * @param customContent Optional custom composable content for this item.
  * @param onClick Callback for when the child item is clicked.
  */
 @Composable
@@ -345,18 +354,23 @@ public fun <T> ChildItem(
   title: String,
   icon: ImageVector?,
   contentColor: Color,
+  customContent: (@Composable RowScope.() -> Unit)? = null,
   onClick: (T) -> Unit,
 ) {
   MenuItem(onClick = { onClick(id) }) {
-    if (icon != null) {
-      MenuItemIcon(icon = icon, tint = contentColor)
-      Space()
+    if (customContent != null) {
+      customContent()
+    } else {
+      if (icon != null) {
+        MenuItemIcon(icon = icon, tint = contentColor)
+        Space()
+      }
+      MenuItemText(
+        modifier = Modifier.weight(1f),
+        text = title,
+        color = contentColor,
+      )
     }
-    MenuItemText(
-      modifier = Modifier.weight(1f),
-      text = title,
-      color = contentColor,
-    )
   }
 }
 
