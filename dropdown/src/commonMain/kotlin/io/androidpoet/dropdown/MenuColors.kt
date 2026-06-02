@@ -23,7 +23,34 @@ import androidx.compose.ui.graphics.Color
 public data class DropDownMenuColors(
   val backgroundColor: Color,
   val contentColor: Color,
-)
+) {
+  public companion object {
+    /** Uses the theme's surface color (default). */
+    @Composable
+    public fun default(): DropDownMenuColors = dropDownMenuColors()
+
+    /** Dark theme preset with elevated surface and inverted content. */
+    @Composable
+    public fun dark(): DropDownMenuColors = DropDownMenuColors(
+      backgroundColor = Color(0xFF2D2D2D),
+      contentColor = Color(0xFFE0E0E0),
+    )
+
+    /** Minimal light preset with very subtle styling. */
+    @Composable
+    public fun minimal(): DropDownMenuColors = DropDownMenuColors(
+      backgroundColor = Color(0xFFF8F8F8),
+      contentColor = Color(0xFF333333),
+    )
+
+    /** Uses the theme's primary color as background with matching content. */
+    @Composable
+    public fun primary(): DropDownMenuColors = DropDownMenuColors(
+      backgroundColor = MaterialTheme.colorScheme.primary,
+      contentColor = MaterialTheme.colorScheme.onPrimary,
+    )
+  }
+}
 
 public object ContentAlpha {
   public const val HIGH: Float = 1.0f
