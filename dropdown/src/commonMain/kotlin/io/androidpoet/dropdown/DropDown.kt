@@ -46,6 +46,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
@@ -154,10 +155,11 @@ public fun <T : Any> DropdownContent(
           is MenuItem -> {
             if (menuItem.hasChildren()) {
               ParentItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
+                id = menuItem.id,
+                title = menuItem.title,
+                subtitle = menuItem.subtitle,
+                icon = menuItem.icon,
+                contentColor = colors.contentColor,
                 onClick = { id ->
                   if (id != null) {
                     onChildClick(id)
@@ -166,11 +168,12 @@ public fun <T : Any> DropdownContent(
               )
             } else {
               ChildItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
-                onItemSelected,
+                id = menuItem.id,
+                title = menuItem.title,
+                subtitle = menuItem.subtitle,
+                icon = menuItem.icon,
+                contentColor = colors.contentColor,
+                onClick = onItemSelected,
               )
             }
           }
@@ -303,6 +306,7 @@ public fun CascadeHeaderItem(
  *
  * @param id The ID of the parent item.
  * @param title The title of the parent item.
+ * @param subtitle Optional secondary text displayed below the title.
  * @param icon The icon for the parent item.
  * @param contentColor The color of the content.
  * @param onClick Callback for when the parent item is clicked.
@@ -311,6 +315,7 @@ public fun CascadeHeaderItem(
 public fun <T> ParentItem(
   id: T,
   title: String,
+  subtitle: String? = null,
   icon: ImageVector?,
   contentColor: Color,
   onClick: (T) -> Unit,
@@ -320,11 +325,21 @@ public fun <T> ParentItem(
       MenuItemIcon(icon = icon, tint = contentColor)
       Space()
     }
-    MenuItemText(
-      modifier = Modifier.weight(1f),
-      text = title,
-      color = contentColor,
-    )
+    Column(modifier = Modifier.weight(1f)) {
+      MenuItemText(
+        modifier = Modifier,
+        text = title,
+        color = contentColor,
+      )
+      if (subtitle != null) {
+        Text(
+          text = subtitle,
+          style = MaterialTheme.typography.labelSmall,
+          color = contentColor.copy(alpha = ContentAlpha.MEDIUM),
+          fontWeight = FontWeight.Normal,
+        )
+      }
+    }
     Space()
     MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
   }
@@ -335,6 +350,7 @@ public fun <T> ParentItem(
  *
  * @param id The ID of the child item.
  * @param title The title of the child item.
+ * @param subtitle Optional secondary text displayed below the title.
  * @param icon The icon for the child item.
  * @param contentColor The color of the content.
  * @param onClick Callback for when the child item is clicked.
@@ -343,6 +359,7 @@ public fun <T> ParentItem(
 public fun <T> ChildItem(
   id: T,
   title: String,
+  subtitle: String? = null,
   icon: ImageVector?,
   contentColor: Color,
   onClick: (T) -> Unit,
@@ -352,11 +369,21 @@ public fun <T> ChildItem(
       MenuItemIcon(icon = icon, tint = contentColor)
       Space()
     }
-    MenuItemText(
-      modifier = Modifier.weight(1f),
-      text = title,
-      color = contentColor,
-    )
+    Column(modifier = Modifier.weight(1f)) {
+      MenuItemText(
+        modifier = Modifier,
+        text = title,
+        color = contentColor,
+      )
+      if (subtitle != null) {
+        Text(
+          text = subtitle,
+          style = MaterialTheme.typography.labelSmall,
+          color = contentColor.copy(alpha = ContentAlpha.MEDIUM),
+          fontWeight = FontWeight.Normal,
+        )
+      }
+    }
   }
 }
 
