@@ -21,7 +21,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -59,11 +59,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.key
-import androidx.compose.ui.input.key.onKeyEvent
-import androidx.compose.ui.input.key.type
-import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.LayoutDirection
@@ -83,12 +79,9 @@ private val LocalCompactMode = staticCompositionLocalOf { false }
  * @param menu Represents the menu items to be displayed in the dropdown.
  * @param colors Specifies the colors for the dropdown menu.
  * @param offset Defines the offset of the dropdown from its default position.
- * @param enter The enter animation for the dropdown content (used for both directions if child/parent not specified).
- * @param exit The exit animation for the dropdown content (used for both directions if child/parent not specified).
- * @param childEnterAnimation Animation when navigating forward into a child sub-menu.
- * @param childExitAnimation Animation when exiting a child sub-menu (navigating forward out).
- * @param parentEnterAnimation Animation when navigating backward to a parent menu.
- * @param parentExitAnimation Animation when exiting a parent menu (navigating backward out).
+ * @param placement Preferred placement relative to the anchor. Default is Down.
+ * @param enter The enter animation for the dropdown content.
+ * @param exit The exit animation for the dropdown content.
  * @param easing The easing function for the animation.
  * @param enterDuration The duration for the enter animation.
  * @param exitDuration The duration for the exit animation.
@@ -105,6 +98,7 @@ public fun <T : Any> Dropdown(
   menu: MenuItem<T>,
   colors: DropDownMenuColors = dropDownMenuColors(),
   offset: DpOffset = DpOffset.Zero,
+  placement: MenuPlacement = MenuPlacement.Down,
   enter: EnterAnimation = EnterAnimation.FadeIn,
   exit: ExitAnimation = ExitAnimation.FadeOut,
   childEnterAnimation: EnterAnimation? = null,
@@ -123,11 +117,25 @@ public fun <T : Any> Dropdown(
   var currentMenu by remember(menu, isOpen) { mutableStateOf(menu) }
   var searchQuery by remember { mutableStateOf("") }
 
+  val resolvedOffset = when (placement) {
+    MenuPlacement.Down -> offset
+    MenuPlacement.Up -> DpOffset(offset.x, -width - offset.y)
+    MenuPlacement.End -> {
+      val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+      DpOffset(if (isRtl) -width - offset.x else offset.x, offset.y)
+    }
+    MenuPlacement.Start -> {
+      val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
+      DpOffset(if (isRtl) offset.x else -width - offset.x, offset.y)
+    }
+    MenuPlacement.Auto -> offset // Simple auto: just use offset (could enhance with BoxWithConstraints)
+  }
+
   DropdownMenu(
     modifier = finalModifier,
     expanded = isOpen,
     onDismissRequest = { onDismiss() },
-    offset = offset,
+    offset = resolvedOffset,
   ) {
     if (searchable) {
       SearchHeader(

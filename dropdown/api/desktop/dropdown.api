@@ -38,8 +38,8 @@ public final class io/androidpoet/dropdown/Divider : io/androidpoet/dropdown/IMe
 public final class io/androidpoet/dropdown/DropDownKt {
 	public static final fun CascadeHeaderItem-iJQMabo (Ljava/lang/String;JLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
 	public static final fun ChildItem-ww6aTOc (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;JLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
-	public static final fun Dropdown-8LEWIhQ (Landroidx/compose/ui/Modifier;ZLio/androidpoet/dropdown/MenuItem;Lio/androidpoet/dropdown/DropDownMenuColors;JLio/androidpoet/dropdown/EnterAnimation;Lio/androidpoet/dropdown/ExitAnimation;Lio/androidpoet/dropdown/Easing;IIFZLjava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
-	public static final fun DropdownContent-PfoAEA0 (Lio/androidpoet/dropdown/MenuItem;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lio/androidpoet/dropdown/DropDownMenuColors;Lkotlin/jvm/functions/Function0;FLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun Dropdown-u0eclSw (Landroidx/compose/ui/Modifier;ZLio/androidpoet/dropdown/MenuItem;Lio/androidpoet/dropdown/DropDownMenuColors;JLio/androidpoet/dropdown/MenuPlacement;Lio/androidpoet/dropdown/EnterAnimation;Lio/androidpoet/dropdown/ExitAnimation;Lio/androidpoet/dropdown/Easing;IIFLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
+	public static final fun DropdownContent-FJfuzF0 (Lio/androidpoet/dropdown/MenuItem;Lkotlin/jvm/functions/Function1;Lio/androidpoet/dropdown/DropDownMenuColors;Lkotlin/jvm/functions/Function0;FLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItem (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemBadge-RPmYEkk (IJLandroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemIcon-RPmYEkk (Landroidx/compose/ui/graphics/vector/ImageVector;JLandroidx/compose/runtime/Composer;I)V
@@ -197,12 +197,14 @@ public final class io/androidpoet/dropdown/MenuItem : io/androidpoet/dropdown/IM
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class io/androidpoet/dropdown/SelectMode : java/lang/Enum {
-	public static final field Multi Lio/androidpoet/dropdown/SelectMode;
-	public static final field None Lio/androidpoet/dropdown/SelectMode;
-	public static final field Single Lio/androidpoet/dropdown/SelectMode;
+public final class io/androidpoet/dropdown/MenuPlacement : java/lang/Enum {
+	public static final field Auto Lio/androidpoet/dropdown/MenuPlacement;
+	public static final field Down Lio/androidpoet/dropdown/MenuPlacement;
+	public static final field End Lio/androidpoet/dropdown/MenuPlacement;
+	public static final field Start Lio/androidpoet/dropdown/MenuPlacement;
+	public static final field Up Lio/androidpoet/dropdown/MenuPlacement;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public static fun valueOf (Ljava/lang/String;)Lio/androidpoet/dropdown/SelectMode;
-	public static fun values ()[Lio/androidpoet/dropdown/SelectMode;
+	public static fun valueOf (Ljava/lang/String;)Lio/androidpoet/dropdown/MenuPlacement;
+	public static fun values ()[Lio/androidpoet/dropdown/MenuPlacement;
 }
 
