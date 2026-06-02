@@ -30,6 +30,13 @@ public sealed interface IMenuItem<T : Any> {
 @MenuDSL
 public class Divider<T : Any>(override val parent: MenuItem<T>? = null) : IMenuItem<T>
 
+// Represent a section header as a special menu item
+@MenuDSL
+public class SectionHeaderItem<T : Any>(
+  public val title: String,
+  override val parent: MenuItem<T>? = null,
+) : IMenuItem<T>
+
 @MenuDSL
 public data class MenuItem<T : Any>(
   val id: T? = null,
@@ -66,6 +73,13 @@ public class DropDownMenuBuilder<T : Any> {
       menu.children = mutableListOf()
     }
     menu.children?.add(Divider(menu))
+  }
+
+  public fun section(title: String) {
+    if (menu.children == null) {
+      menu.children = mutableListOf()
+    }
+    menu.children?.add(SectionHeaderItem(title, menu))
   }
 
   public fun item(
