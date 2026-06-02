@@ -37,6 +37,7 @@ public data class MenuItem<T : Any>(
   override val parent: MenuItem<T>? = null,
 ) : IMenuItem<T> {
   var icon: ImageVector? = null
+  var badge: Int? = null
   var children: MutableList<IMenuItem<T>>? = null // Note: Changed to IMenuItem
 
   public fun hasChildren(): Boolean = !children.isNullOrEmpty()
@@ -53,6 +54,10 @@ public class DropDownMenuBuilder<T : Any> {
 
   public fun icon(value: ImageVector) {
     menu.icon = value
+  }
+
+  public fun badge(value: Int) {
+    menu.badge = value
   }
 
   public fun horizontalDivider() {

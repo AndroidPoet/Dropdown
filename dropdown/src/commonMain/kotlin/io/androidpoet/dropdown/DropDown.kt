@@ -21,13 +21,16 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.ArrowRight
@@ -46,9 +49,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 /**
  * [Dropdown] is a DropdownMenu wrapper class to add cascade effect and animations.
@@ -154,10 +160,11 @@ public fun <T : Any> DropdownContent(
           is MenuItem -> {
             if (menuItem.hasChildren()) {
               ParentItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
+                id = menuItem.id,
+                title = menuItem.title,
+                icon = menuItem.icon,
+                badge = menuItem.badge,
+                contentColor = colors.contentColor,
                 onClick = { id ->
                   if (id != null) {
                     onChildClick(id)
@@ -166,11 +173,12 @@ public fun <T : Any> DropdownContent(
               )
             } else {
               ChildItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
-                onItemSelected,
+                id = menuItem.id,
+                title = menuItem.title,
+                icon = menuItem.icon,
+                badge = menuItem.badge,
+                contentColor = colors.contentColor,
+                onClick = onItemSelected,
               )
             }
           }
@@ -245,6 +253,38 @@ public fun MenuItemText(
 }
 
 /**
+ * Displays a numeric badge indicator for a MenuItem.
+ *
+ * @param count The number to display in the badge.
+ * @param tint The color of the badge text and background.
+ */
+@Composable
+public fun MenuItemBadge(
+  count: Int,
+  tint: Color,
+) {
+  val badgeText = if (count > 99) "99+" else count.toString()
+  Box(
+    modifier = Modifier
+      .size(20.dp)
+      .background(
+        color = tint.copy(alpha = 0.15f),
+        shape = CircleShape,
+      ),
+    contentAlignment = Alignment.Center,
+  ) {
+    Text(
+      text = badgeText,
+      style = MaterialTheme.typography.labelSmall,
+      fontSize = 10.sp,
+      fontWeight = FontWeight.Bold,
+      color = tint,
+      textAlign = TextAlign.Center,
+    )
+  }
+}
+
+/**
  * Wrapper for handling onClick and user interaction for a dropdown MenuItem.
  *
  * @param onClick Callback for when the MenuItem is clicked.
@@ -304,6 +344,7 @@ public fun CascadeHeaderItem(
  * @param id The ID of the parent item.
  * @param title The title of the parent item.
  * @param icon The icon for the parent item.
+ * @param badge Optional numeric badge to display on the item.
  * @param contentColor The color of the content.
  * @param onClick Callback for when the parent item is clicked.
  */
@@ -312,6 +353,7 @@ public fun <T> ParentItem(
   id: T,
   title: String,
   icon: ImageVector?,
+  badge: Int? = null,
   contentColor: Color,
   onClick: (T) -> Unit,
 ) {
@@ -325,7 +367,11 @@ public fun <T> ParentItem(
       text = title,
       color = contentColor,
     )
-    Space()
+    if (badge != null) {
+      Spacer(modifier = Modifier.width(8.dp))
+      MenuItemBadge(count = badge, tint = contentColor)
+      Space()
+    }
     MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
   }
 }
@@ -336,6 +382,7 @@ public fun <T> ParentItem(
  * @param id The ID of the child item.
  * @param title The title of the child item.
  * @param icon The icon for the child item.
+ * @param badge Optional numeric badge to display on the item.
  * @param contentColor The color of the content.
  * @param onClick Callback for when the child item is clicked.
  */
@@ -344,6 +391,7 @@ public fun <T> ChildItem(
   id: T,
   title: String,
   icon: ImageVector?,
+  badge: Int? = null,
   contentColor: Color,
   onClick: (T) -> Unit,
 ) {
@@ -357,6 +405,10 @@ public fun <T> ChildItem(
       text = title,
       color = contentColor,
     )
+    if (badge != null) {
+      Spacer(modifier = Modifier.width(8.dp))
+      MenuItemBadge(count = badge, tint = contentColor)
+    }
   }
 }
 
