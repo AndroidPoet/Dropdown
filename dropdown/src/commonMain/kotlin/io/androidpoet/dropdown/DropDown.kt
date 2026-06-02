@@ -37,6 +37,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.ui.draw.alpha
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -154,10 +155,11 @@ public fun <T : Any> DropdownContent(
           is MenuItem -> {
             if (menuItem.hasChildren()) {
               ParentItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
+                id = menuItem.id,
+                title = menuItem.title,
+                icon = menuItem.icon,
+                contentColor = colors.contentColor,
+                enabled = menuItem.enabled,
                 onClick = { id ->
                   if (id != null) {
                     onChildClick(id)
@@ -166,11 +168,12 @@ public fun <T : Any> DropdownContent(
               )
             } else {
               ChildItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
-                onItemSelected,
+                id = menuItem.id,
+                title = menuItem.title,
+                icon = menuItem.icon,
+                contentColor = colors.contentColor,
+                enabled = menuItem.enabled,
+                onClick = onItemSelected,
               )
             }
           }
@@ -248,15 +251,18 @@ public fun MenuItemText(
  * Wrapper for handling onClick and user interaction for a dropdown MenuItem.
  *
  * @param onClick Callback for when the MenuItem is clicked.
+ * @param enabled Whether this item is enabled (grayed out and non-interactive when false).
  * @param content The content to be displayed within the MenuItem.
  */
 @Composable
 public fun MenuItem(
   onClick: () -> Unit,
+  enabled: Boolean = true,
   content: @Composable RowScope.() -> Unit,
 ) {
   DropdownMenuItem(
     onClick = onClick,
+    enabled = enabled,
     interactionSource = remember { MutableInteractionSource() },
     text = {
       Row(
@@ -305,6 +311,7 @@ public fun CascadeHeaderItem(
  * @param title The title of the parent item.
  * @param icon The icon for the parent item.
  * @param contentColor The color of the content.
+ * @param enabled Whether this item is enabled.
  * @param onClick Callback for when the parent item is clicked.
  */
 @Composable
@@ -313,20 +320,25 @@ public fun <T> ParentItem(
   title: String,
   icon: ImageVector?,
   contentColor: Color,
+  enabled: Boolean = true,
   onClick: (T) -> Unit,
 ) {
-  MenuItem(onClick = { onClick(id) }) {
+  val alpha = if (enabled) 1f else ContentAlpha.DISABLED
+  MenuItem(
+    onClick = { if (enabled) onClick(id) },
+    enabled = enabled,
+  ) {
     if (icon != null) {
-      MenuItemIcon(icon = icon, tint = contentColor)
+      MenuItemIcon(icon = icon, tint = contentColor.copy(alpha = alpha))
       Space()
     }
     MenuItemText(
       modifier = Modifier.weight(1f),
       text = title,
-      color = contentColor,
+      color = contentColor.copy(alpha = alpha),
     )
     Space()
-    MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
+    MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor.copy(alpha = alpha))
   }
 }
 
@@ -337,6 +349,7 @@ public fun <T> ParentItem(
  * @param title The title of the child item.
  * @param icon The icon for the child item.
  * @param contentColor The color of the content.
+ * @param enabled Whether this item is enabled.
  * @param onClick Callback for when the child item is clicked.
  */
 @Composable
@@ -345,17 +358,22 @@ public fun <T> ChildItem(
   title: String,
   icon: ImageVector?,
   contentColor: Color,
+  enabled: Boolean = true,
   onClick: (T) -> Unit,
 ) {
-  MenuItem(onClick = { onClick(id) }) {
+  val alpha = if (enabled) 1f else ContentAlpha.DISABLED
+  MenuItem(
+    onClick = { if (enabled) onClick(id) },
+    enabled = enabled,
+  ) {
     if (icon != null) {
-      MenuItemIcon(icon = icon, tint = contentColor)
+      MenuItemIcon(icon = icon, tint = contentColor.copy(alpha = alpha))
       Space()
     }
     MenuItemText(
       modifier = Modifier.weight(1f),
       text = title,
-      color = contentColor,
+      color = contentColor.copy(alpha = alpha),
     )
   }
 }
