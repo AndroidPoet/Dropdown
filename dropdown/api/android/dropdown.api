@@ -39,7 +39,7 @@ public final class io/androidpoet/dropdown/DropDownKt {
 	public static final fun CascadeHeaderItem-iJQMabo (Ljava/lang/String;JLkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;I)V
 	public static final fun ChildItem-ww6aTOc (Ljava/lang/Object;Ljava/lang/String;Landroidx/compose/ui/graphics/vector/ImageVector;JLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
 	public static final fun Dropdown-dJ089pE (Landroidx/compose/ui/Modifier;ZLio/androidpoet/dropdown/MenuItem;Lio/androidpoet/dropdown/DropDownMenuColors;JLio/androidpoet/dropdown/EnterAnimation;Lio/androidpoet/dropdown/ExitAnimation;Lio/androidpoet/dropdown/Easing;IIFLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;III)V
-	public static final fun DropdownContent-FJfuzF0 (Lio/androidpoet/dropdown/MenuItem;Lkotlin/jvm/functions/Function1;Lio/androidpoet/dropdown/DropDownMenuColors;Lkotlin/jvm/functions/Function0;FLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)V
+	public static final fun DropdownContent-0vH8DBg (Lio/androidpoet/dropdown/MenuItem;ILkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lio/androidpoet/dropdown/DropDownMenuColors;Lkotlin/jvm/functions/Function0;FLkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 	public static final fun MenuItem (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemIcon-RPmYEkk (Landroidx/compose/ui/graphics/vector/ImageVector;JLandroidx/compose/runtime/Composer;I)V
 	public static final fun MenuItemText-cf5BqRc (Landroidx/compose/ui/Modifier;Ljava/lang/String;JZLandroidx/compose/runtime/Composer;II)V
