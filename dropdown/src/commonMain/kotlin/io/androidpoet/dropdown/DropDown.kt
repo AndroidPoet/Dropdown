@@ -21,6 +21,7 @@ import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -31,10 +32,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.ArrowRight
+import androidx.compose.material.icons.filled.CheckBox
+import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
+import androidx.compose.material.icons.filled.RadioButtonChecked
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -59,7 +65,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.LayoutDirection
@@ -116,6 +127,10 @@ public fun <T : Any> Dropdown(
 ) {
   var currentMenu by remember(menu, isOpen) { mutableStateOf(menu) }
   var searchQuery by remember { mutableStateOf("") }
+  var focusedIndex by remember { mutableStateOf(0) }
+  var navigationDirection by remember { mutableStateOf(NavigationDirection.Forward) }
+
+  val finalModifier = modifier.width(width).background(colors.backgroundColor)
 
   val resolvedOffset = when (placement) {
     MenuPlacement.Down -> offset
@@ -173,13 +188,18 @@ public fun <T : Any> Dropdown(
         onItemSelected = onItemSelected,
         colors = colors,
         width = width,
+        focusedIndex = focusedIndex,
+        onFocusedIndexChange = { focusedIndex = it },
         onParentClick = {
+          navigationDirection = NavigationDirection.Backward
           focusedIndex = 0
           currentMenu =
             targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
         },
         onChildClick = { id ->
+          navigationDirection = NavigationDirection.Forward
           searchQuery = ""
+          focusedIndex = 0
           val child = targetMenu.getChild(id)
           currentMenu = child ?: throw IllegalStateException("Invalid item id: $id")
         },
@@ -242,6 +262,8 @@ public fun <T : Any> DropdownContent(
   onParentClick: () -> Unit,
   width: Dp,
   onChildClick: (T) -> Unit,
+  focusedIndex: Int = 0,
+  onFocusedIndexChange: (Int) -> Unit = {},
 ) {
   val items = remember(targetMenu) {
     targetMenu.children?.filterIsInstance<MenuItem<T>>().orEmpty()

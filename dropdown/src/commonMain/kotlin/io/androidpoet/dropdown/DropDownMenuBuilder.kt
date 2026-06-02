@@ -35,6 +35,16 @@ public enum class MenuPlacement {
   Start,
 }
 
+/** Defines the selection mode for menu items. */
+public enum class SelectMode {
+  /** No selection indicators. */
+  None,
+  /** Single selection with radio buttons. */
+  Single,
+  /** Multi selection with checkboxes. */
+  Multi,
+}
+
 @DslMarker
 public annotation class MenuDSL
 
