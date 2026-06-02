@@ -50,9 +50,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpOffset
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -356,9 +357,15 @@ public fun CascadeHeaderItem(
   contentColor: Color,
   onClick: () -> Unit,
 ) {
+  val layoutDirection = LocalLayoutDirection.current
+  val backIcon = if (layoutDirection == LayoutDirection.Ltr) {
+    Icons.AutoMirrored.Rounded.ArrowLeft
+  } else {
+    Icons.AutoMirrored.Rounded.ArrowRight
+  }
   MenuItem(onClick = { onClick() }) {
     MenuItemIcon(
-      icon = Icons.AutoMirrored.Rounded.ArrowLeft,
+      icon = backIcon,
       tint = contentColor.copy(alpha = ContentAlpha.MEDIUM),
     )
     Spacer(modifier = Modifier.width(4.dp))
@@ -394,11 +401,13 @@ public fun <T> ParentItem(
   enabled: Boolean = true,
   onClick: (T) -> Unit,
 ) {
-  val alpha = if (enabled) 1f else ContentAlpha.DISABLED
-  MenuItem(
-    onClick = { if (enabled) onClick(id) },
-    enabled = enabled,
-  ) {
+  val layoutDirection = LocalLayoutDirection.current
+  val forwardIcon = if (layoutDirection == LayoutDirection.Ltr) {
+    Icons.AutoMirrored.Rounded.ArrowRight
+  } else {
+    Icons.AutoMirrored.Rounded.ArrowLeft
+  }
+  MenuItem(onClick = { onClick(id) }) {
     if (icon != null) {
       MenuItemIcon(icon = icon, tint = contentColor.copy(alpha = alpha))
       Space()
@@ -408,12 +417,8 @@ public fun <T> ParentItem(
       text = title,
       color = contentColor,
     )
-    if (badge != null) {
-      Spacer(modifier = Modifier.width(8.dp))
-      MenuItemBadge(count = badge, tint = contentColor)
-      Space()
-    }
-    MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
+    Space()
+    MenuItemIcon(icon = forwardIcon, tint = contentColor)
   }
 }
 
