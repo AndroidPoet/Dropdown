@@ -19,6 +19,8 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 
+public typealias MenuItemContent<T> = @Composable RowScope.() -> Unit
+
 /**
  * Defines the preferred placement of the dropdown menu relative to its anchor.
  */
@@ -73,9 +75,12 @@ public data class MenuItem<T : Any>(
   val enabled: Boolean = true,
 ) : IMenuItem<T> {
   var icon: ImageVector? = null
+  var subtitle: String? = null
+  var badge: Int? = null
   var selectable: SelectMode = SelectMode.None
   var selected: Boolean = false
-  var children: MutableList<IMenuItem<T>>? = null // Note: Changed to IMenuItem
+  var customContent: (@Composable RowScope.() -> Unit)? = null
+  var children: MutableList<IMenuItem<T>>? = null
 
   public fun hasChildren(): Boolean = !children.isNullOrEmpty()
 
@@ -91,6 +96,18 @@ public class DropDownMenuBuilder<T : Any> {
 
   public fun icon(value: ImageVector) {
     menu.icon = value
+  }
+
+  public fun subtitle(value: String) {
+    menu.subtitle = value
+  }
+
+  public fun badge(count: Int) {
+    menu.badge = count
+  }
+
+  public fun content(content: @Composable RowScope.() -> Unit) {
+    menu.customContent = content
   }
 
   public fun selectable(mode: SelectMode, selected: Boolean = false) {

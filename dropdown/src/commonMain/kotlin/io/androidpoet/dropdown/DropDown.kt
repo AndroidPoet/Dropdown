@@ -98,6 +98,8 @@ private val LocalCompactMode = staticCompositionLocalOf { false }
  * @param exitDuration The duration for the exit animation.
  * @param searchable If true, shows a search field at the top of the dropdown.
  * @param searchPlaceholder Placeholder text for the search field.
+ * @param compact If true, uses reduced padding for menu items.
+ * @param contentPadding Custom padding values for each menu item.
  * @param onItemSelected Callback triggered when an item is selected in the dropdown.
  * @param onDismiss Callback executed when the dropdown is dismissed or closed.
  */
@@ -122,6 +124,8 @@ public fun <T : Any> Dropdown(
   width: Dp = MAX_WIDTH,
   searchable: Boolean = false,
   searchPlaceholder: String = "Search",
+  compact: Boolean = false,
+  contentPadding: PaddingValues? = null,
   onItemSelected: (T?) -> Unit,
   onDismiss: () -> Unit,
 ) {
@@ -152,15 +156,19 @@ public fun <T : Any> Dropdown(
     onDismissRequest = { onDismiss() },
     offset = resolvedOffset,
   ) {
-    if (searchable) {
-      SearchHeader(
-        query = searchQuery,
-        onQueryChange = { searchQuery = it },
-        placeholder = searchPlaceholder,
-        colors = colors,
-      )
-    }
-    AnimatedContent(targetState = currentMenu, transitionSpec = {
+    CompositionLocalProvider(
+      LocalCompactMode provides compact,
+      LocalItemContentPadding provides contentPadding,
+    ) {
+      if (searchable) {
+        SearchHeader(
+          query = searchQuery,
+          onQueryChange = { searchQuery = it },
+          placeholder = searchPlaceholder,
+          colors = colors,
+        )
+      }
+      AnimatedContent(targetState = currentMenu, transitionSpec = {
       val actualEnter = if (navigationDirection == NavigationDirection.Forward) {
         childEnterAnimation ?: enter
       } else {
@@ -204,6 +212,7 @@ public fun <T : Any> Dropdown(
           currentMenu = child ?: throw IllegalStateException("Invalid item id: $id")
         },
       )
+    }
     }
   }
 }
@@ -340,8 +349,13 @@ public fun <T : Any> DropdownContent(
               ParentItem(
                 id = menuItem.id,
                 title = menuItem.title,
+                subtitle = menuItem.subtitle,
+                badge = menuItem.badge,
                 icon = menuItem.icon,
+                selectable = menuItem.selectable,
+                selected = menuItem.selected,
                 contentColor = colors.contentColor,
+                customContent = menuItem.customContent,
                 onClick = { id ->
                   if (id != null) {
                     onChildClick(id)
@@ -352,8 +366,13 @@ public fun <T : Any> DropdownContent(
               ChildItem(
                 id = menuItem.id,
                 title = menuItem.title,
+                subtitle = menuItem.subtitle,
+                badge = menuItem.badge,
                 icon = menuItem.icon,
+                selectable = menuItem.selectable,
+                selected = menuItem.selected,
                 contentColor = colors.contentColor,
+                customContent = menuItem.customContent,
                 onClick = onItemSelected,
               )
             }
@@ -591,6 +610,7 @@ public fun <T> ParentItem(
   id: T,
   title: String,
   subtitle: String? = null,
+  badge: Int? = null,
   icon: ImageVector?,
   selectable: SelectMode = SelectMode.None,
   selected: Boolean = false,
@@ -598,41 +618,42 @@ public fun <T> ParentItem(
   customContent: (@Composable RowScope.() -> Unit)? = null,
   onClick: (T) -> Unit,
 ) {
-  val layoutDirection = LocalLayoutDirection.current
-  val forwardIcon = if (layoutDirection == LayoutDirection.Ltr) {
-    Icons.AutoMirrored.Rounded.ArrowRight
-  } else {
-    Icons.AutoMirrored.Rounded.ArrowLeft
-  }
+  val forwardIcon = Icons.AutoMirrored.Rounded.ArrowRight
   MenuItem(onClick = { onClick(id) }) {
     if (customContent != null) {
       customContent()
     } else {
+      if (selectable != SelectMode.None) {
+        val selIcon = selectableIcon(selectable, selected, contentColor)
+        if (selIcon != null) {
+          MenuItemIcon(icon = selIcon, tint = contentColor)
+          Space()
+        }
+      }
       if (icon != null) {
         MenuItemIcon(icon = icon, tint = contentColor)
         Space()
       }
-      MenuItemText(
-        modifier = Modifier.weight(1f),
-        text = title,
-        color = contentColor,
-      )
+      Column(modifier = Modifier.weight(1f)) {
+        MenuItemText(
+          modifier = Modifier,
+          text = title,
+          color = contentColor,
+        )
+        if (subtitle != null) {
+          Text(
+            text = subtitle,
+            style = MaterialTheme.typography.bodySmall,
+            color = contentColor.copy(alpha = ContentAlpha.MEDIUM),
+          )
+        }
+      }
+      if (badge != null) {
+        Space()
+        MenuItemBadge(count = badge, tint = contentColor)
+      }
       Space()
-      MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
-    }
-    val selIcon = selectableIcon(selectable, selected, contentColor)
-    if (selIcon != null) {
-      MenuItemIcon(icon = selIcon, tint = contentColor)
-      Space()
-    }
-    MenuItemText(
-      modifier = Modifier.weight(1f),
-      text = title,
-      color = contentColor,
-    )
-    if (selectable == SelectMode.None) {
-      Space()
-      MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
+      MenuItemIcon(icon = forwardIcon, tint = contentColor)
     }
   }
 }
@@ -655,6 +676,7 @@ public fun <T> ChildItem(
   id: T,
   title: String,
   subtitle: String? = null,
+  badge: Int? = null,
   icon: ImageVector?,
   selectable: SelectMode = SelectMode.None,
   selected: Boolean = false,
@@ -666,26 +688,36 @@ public fun <T> ChildItem(
     if (customContent != null) {
       customContent()
     } else {
+      if (selectable != SelectMode.None) {
+        val selIcon = selectableIcon(selectable, selected, contentColor)
+        if (selIcon != null) {
+          MenuItemIcon(icon = selIcon, tint = contentColor)
+          Space()
+        }
+      }
       if (icon != null) {
         MenuItemIcon(icon = icon, tint = contentColor)
         Space()
       }
-      MenuItemText(
-        modifier = Modifier.weight(1f),
-        text = title,
-        color = contentColor,
-      )
+      Column(modifier = Modifier.weight(1f)) {
+        MenuItemText(
+          modifier = Modifier,
+          text = title,
+          color = contentColor,
+        )
+        if (subtitle != null) {
+          Text(
+            text = subtitle,
+            style = MaterialTheme.typography.bodySmall,
+            color = contentColor.copy(alpha = ContentAlpha.MEDIUM),
+          )
+        }
+      }
+      if (badge != null) {
+        Space()
+        MenuItemBadge(count = badge, tint = contentColor)
+      }
     }
-    val selIcon = selectableIcon(selectable, selected, contentColor)
-    if (selIcon != null) {
-      MenuItemIcon(icon = selIcon, tint = contentColor)
-      Space()
-    }
-    MenuItemText(
-      modifier = Modifier.weight(1f),
-      text = title,
-      color = contentColor,
-    )
   }
 }
 

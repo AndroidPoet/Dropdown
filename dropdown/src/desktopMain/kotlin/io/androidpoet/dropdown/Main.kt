@@ -30,7 +30,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Abc
+import androidx.compose.material.icons.automirrored.filled.Redo
+import androidx.compose.material.icons.automirrored.filled.Undo
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Close
@@ -38,21 +39,14 @@ import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.ContentPaste
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FileCopy
 import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.FormatBold
 import androidx.compose.material.icons.filled.FormatItalic
 import androidx.compose.material.icons.filled.FormatUnderlined
-import androidx.compose.material.icons.filled.Image
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.Redo
-import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Undo
 import androidx.compose.material.icons.filled.ZoomIn
 import androidx.compose.material.icons.filled.ZoomOut
 import androidx.compose.material3.Button
@@ -97,89 +91,123 @@ private fun DropdownDemo() {
   var isOpen by remember { mutableStateOf(false) }
   var selectedOption by remember { mutableStateOf<String?>(null) }
 
-  // ── Menu with 3-level nesting ─────────────────────────────────
+  // ── Menu with 4-level nesting, icons, subtitles, badges ──────
   val menu = remember {
     dropDownMenu<String> {
       section("File")
       item("new", "New") {
+        subtitle("Create a new file")
         icon(Icons.Default.Add)
       }
       item("open", "Open...") {
+        subtitle("Browse for files")
         icon(Icons.Default.FolderOpen)
+        badge(3)
       }
       item("recent", "Recent Files") {
         icon(Icons.Default.FileCopy)
-        item("doc1", "Resume.pdf")
-        item("doc2", "Photo.png")
-        item("doc3", "Notes.txt")
+        badge(12)
+        item("doc1", "Resume.pdf") {
+          subtitle("45 KB · Last week")
+        }
+        item("doc2", "Photo.png") {
+          subtitle("2.3 MB · Yesterday")
+        }
+        item("doc3", "Notes.txt") {
+          subtitle("12 KB · Today")
+        }
       }
       horizontalDivider()
 
       section("Edit")
       item("undo", "Undo") {
-        icon(Icons.Default.Undo)
+        subtitle("Ctrl+Z")
+        icon(Icons.AutoMirrored.Filled.Undo)
       }
       item("redo", "Redo") {
-        icon(Icons.Default.Redo)
+        subtitle("Ctrl+Shift+Z")
+        icon(Icons.AutoMirrored.Filled.Redo)
       }
       horizontalDivider()
       item("cut", "Cut") {
+        subtitle("Ctrl+X")
         icon(Icons.Default.ContentCut)
       }
       item("copy", "Copy") {
+        subtitle("Ctrl+C")
         icon(Icons.Default.ContentCopy)
       }
       item("paste", "Paste") {
+        subtitle("Ctrl+V")
         icon(Icons.Default.ContentPaste)
       }
       horizontalDivider()
 
       section("Format")
       item("bold", "Bold") {
+        subtitle("Ctrl+B")
         icon(Icons.Default.FormatBold)
       }
       item("italic", "Italic") {
+        subtitle("Ctrl+I")
         icon(Icons.Default.FormatItalic)
       }
       item("underline", "Underline") {
+        subtitle("Ctrl+U")
         icon(Icons.Default.FormatUnderlined)
       }
       horizontalDivider()
 
       section("View")
       item("zoom", "Zoom") {
+        subtitle("Adjust magnification")
         icon(Icons.Default.ZoomIn)
+        badge(2)
         item("zoomIn", "Zoom In") {
+          subtitle("Ctrl++")
           icon(Icons.Default.ZoomIn)
         }
         item("zoomOut", "Zoom Out") {
+          subtitle("Ctrl+-")
           icon(Icons.Default.ZoomOut)
         }
-        item("zoomReset", "Reset to 100%")
+        item("zoomReset", "Reset to 100%") {
+          subtitle("Ctrl+0")
+        }
       }
       item("fullscreen", "Toggle Fullscreen") {
+        subtitle("F11")
         icon(Icons.Default.Close)
       }
       horizontalDivider()
 
       section("Help")
       item("about", "About") {
+        subtitle("Version 2.1.21")
         icon(Icons.Default.Info)
       }
       item("settings", "Settings") {
         icon(Icons.Default.Settings)
+        badge(5)
         item("general", "General") {
+          subtitle("Theme, language, updates")
           icon(Icons.Default.Settings)
         }
         item("editor", "Editor") {
+          subtitle("Font, tabs, formatting")
           icon(Icons.Default.Edit)
+          badge(2)
         }
         item("plugins", "Plugins") {
+          subtitle("Extensions & add-ons")
           icon(Icons.Default.Build)
+          badge(3)
           item("plugin1", "Kotlin Support") {
+            subtitle("Lint, inspections, refactoring")
             icon(Icons.Default.Code)
           }
           item("plugin2", "Markdown Preview") {
+            subtitle("Live preview panel")
             icon(Icons.Default.Edit)
           }
         }
@@ -192,12 +220,12 @@ private fun DropdownDemo() {
     verticalArrangement = Arrangement.spacedBy(16.dp),
   ) {
     Text(
-      "Nested Cascade Animation Demo",
+      "Nested Cascade Demo — Icons + Text Animate Together",
       style = MaterialTheme.typography.headlineSmall,
       fontWeight = FontWeight.Bold,
     )
     Text(
-      "Navigate through nested menus → each level animates with custom transitions",
+      "Navigate 4-level nested menus → icons, subtitles, and badges all cascade-animate on the same line",
       style = MaterialTheme.typography.bodyMedium,
       color = MaterialTheme.colorScheme.onSurfaceVariant,
     )
@@ -211,17 +239,22 @@ private fun DropdownDemo() {
       ),
     ) {
       Column(modifier = Modifier.padding(16.dp).verticalScroll(rememberScrollState())) {
-        Text("Animation Legend", fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
+        Text("Legend", fontWeight = FontWeight.SemiBold, fontSize = 13.sp)
         Spacer(Modifier.height(6.dp))
         LegendRow(color = Color(0xFF4CAF50), label = "Forward (child): SlideInHorizontally + fade in")
         Spacer(Modifier.height(4.dp))
         LegendRow(color = Color(0xFFFF5722), label = "Backward (parent): SlideOutHorizontally + fade out")
         Spacer(Modifier.height(4.dp))
         LegendRow(color = Color(0xFF9C27B0), label = "Same-level: ScaleIn / fade")
+        Spacer(Modifier.height(4.dp))
+        LegendRow(color = Color(0xFF2196F3), label = "Badges show notification counts")
+        Spacer(Modifier.height(4.dp))
+        LegendRow(color = Color(0xFF607D8B), label = "Subtitles show descriptions / shortcuts")
         Spacer(Modifier.height(12.dp))
         Text(
-          "Click arrow-right ▶ on items with children to drill down. " +
-            "Click arrow-left ◀ on the header to go back.",
+          "▶ on items with children → drill down into nested menu\n" +
+            "◀ on header bar → go back to parent menu\n" +
+            "Icons + text animate together in the same line during cascade",
           style = MaterialTheme.typography.bodySmall,
           color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
