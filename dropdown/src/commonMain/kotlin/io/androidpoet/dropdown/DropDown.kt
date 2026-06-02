@@ -79,6 +79,7 @@ import androidx.compose.ui.unit.sp
 
 private val LocalItemContentPadding = staticCompositionLocalOf<PaddingValues?> { null }
 private val LocalCompactMode = staticCompositionLocalOf { false }
+private enum class NavigationDirection { Forward, Backward }
 
 /**
  * [Dropdown] is a DropdownMenu wrapper class to add cascade effect and animations.
@@ -112,6 +113,10 @@ public fun <T : Any> Dropdown(
   placement: MenuPlacement = MenuPlacement.Down,
   enter: EnterAnimation = EnterAnimation.FadeIn,
   exit: ExitAnimation = ExitAnimation.FadeOut,
+  childEnterAnimation: EnterAnimation = EnterAnimation.SlideInHorizontally,
+  childExitAnimation: ExitAnimation = ExitAnimation.FadeOut,
+  parentEnterAnimation: EnterAnimation = EnterAnimation.FadeIn,
+  parentExitAnimation: ExitAnimation = ExitAnimation.SlideOutHorizontally,
   easing: Easing = Easing.FastOutLinearInEasing,
   enterDuration: Int = 500,
   exitDuration: Int = 500,
@@ -126,6 +131,7 @@ public fun <T : Any> Dropdown(
   var currentMenu by remember(menu, isOpen) { mutableStateOf(menu) }
   var searchQuery by remember { mutableStateOf("") }
   var focusedIndex by remember { mutableStateOf(0) }
+  var navigationDirection by remember { mutableStateOf(NavigationDirection.Forward) }
 
   val finalModifier = modifier.width(width).background(colors.backgroundColor)
 
@@ -162,6 +168,16 @@ public fun <T : Any> Dropdown(
         )
       }
       AnimatedContent(targetState = currentMenu, transitionSpec = {
+        val actualEnter = if (navigationDirection == NavigationDirection.Forward) {
+          childEnterAnimation
+        } else {
+          parentEnterAnimation
+        }
+        val actualExit = if (navigationDirection == NavigationDirection.Forward) {
+          childExitAnimation
+        } else {
+          parentExitAnimation
+        }
         animateContent(
           AnimationProp(
             enterDuration = enterDuration,
@@ -169,8 +185,8 @@ public fun <T : Any> Dropdown(
             delay = 0,
             easing = easing,
           ),
-          enterAnimation = enter,
-          exitAnimation = exit,
+          enterAnimation = actualEnter,
+          exitAnimation = actualExit,
         )
       }) { targetMenu ->
         DropdownContent(
@@ -182,11 +198,13 @@ public fun <T : Any> Dropdown(
           focusedIndex = focusedIndex,
           onFocusedIndexChange = { focusedIndex = it },
           onParentClick = {
+            navigationDirection = NavigationDirection.Backward
             focusedIndex = 0
             currentMenu =
               targetMenu.parent ?: throw IllegalStateException("Invalid parent menu")
           },
           onChildClick = { id ->
+            navigationDirection = NavigationDirection.Forward
             searchQuery = ""
             focusedIndex = 0
             val child = targetMenu.getChild(id)
