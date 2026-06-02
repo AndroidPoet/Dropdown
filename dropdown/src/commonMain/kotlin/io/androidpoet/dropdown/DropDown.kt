@@ -31,6 +31,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowLeft
 import androidx.compose.material.icons.automirrored.rounded.ArrowRight
+import androidx.compose.material.icons.filled.CheckBox
+import androidx.compose.material.icons.filled.CheckBoxOutlineBlank
+import androidx.compose.material.icons.filled.RadioButtonChecked
+import androidx.compose.material.icons.filled.RadioButtonUnchecked
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
@@ -154,10 +158,12 @@ public fun <T : Any> DropdownContent(
           is MenuItem -> {
             if (menuItem.hasChildren()) {
               ParentItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
+                id = menuItem.id,
+                title = menuItem.title,
+                icon = menuItem.icon,
+                selectable = menuItem.selectable,
+                selected = menuItem.selected,
+                contentColor = colors.contentColor,
                 onClick = { id ->
                   if (id != null) {
                     onChildClick(id)
@@ -166,11 +172,13 @@ public fun <T : Any> DropdownContent(
               )
             } else {
               ChildItem(
-                menuItem.id,
-                menuItem.title,
-                menuItem.icon,
-                colors.contentColor,
-                onItemSelected,
+                id = menuItem.id,
+                title = menuItem.title,
+                icon = menuItem.icon,
+                selectable = menuItem.selectable,
+                selected = menuItem.selected,
+                contentColor = colors.contentColor,
+                onClick = onItemSelected,
               )
             }
           }
@@ -298,12 +306,27 @@ public fun CascadeHeaderItem(
   }
 }
 
+@Composable
+private fun selectableIcon(
+  selectable: SelectMode,
+  selected: Boolean,
+  tint: Color,
+): ImageVector? = when {
+  selectable == SelectMode.Multi && selected -> Icons.Filled.CheckBox
+  selectable == SelectMode.Multi && !selected -> Icons.Filled.CheckBoxOutlineBlank
+  selectable == SelectMode.Single && selected -> Icons.Filled.RadioButtonChecked
+  selectable == SelectMode.Single && !selected -> Icons.Filled.RadioButtonUnchecked
+  else -> null
+}
+
 /**
  * Represents a parent item of the menu.
  *
  * @param id The ID of the parent item.
  * @param title The title of the parent item.
  * @param icon The icon for the parent item.
+ * @param selectable The selection mode for this item.
+ * @param selected Whether this item is currently selected.
  * @param contentColor The color of the content.
  * @param onClick Callback for when the parent item is clicked.
  */
@@ -312,6 +335,8 @@ public fun <T> ParentItem(
   id: T,
   title: String,
   icon: ImageVector?,
+  selectable: SelectMode = SelectMode.None,
+  selected: Boolean = false,
   contentColor: Color,
   onClick: (T) -> Unit,
 ) {
@@ -320,13 +345,20 @@ public fun <T> ParentItem(
       MenuItemIcon(icon = icon, tint = contentColor)
       Space()
     }
+    val selIcon = selectableIcon(selectable, selected, contentColor)
+    if (selIcon != null) {
+      MenuItemIcon(icon = selIcon, tint = contentColor)
+      Space()
+    }
     MenuItemText(
       modifier = Modifier.weight(1f),
       text = title,
       color = contentColor,
     )
-    Space()
-    MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
+    if (selectable == SelectMode.None) {
+      Space()
+      MenuItemIcon(icon = Icons.AutoMirrored.Rounded.ArrowRight, tint = contentColor)
+    }
   }
 }
 
@@ -336,6 +368,8 @@ public fun <T> ParentItem(
  * @param id The ID of the child item.
  * @param title The title of the child item.
  * @param icon The icon for the child item.
+ * @param selectable The selection mode for this item.
+ * @param selected Whether this item is currently selected.
  * @param contentColor The color of the content.
  * @param onClick Callback for when the child item is clicked.
  */
@@ -344,12 +378,19 @@ public fun <T> ChildItem(
   id: T,
   title: String,
   icon: ImageVector?,
+  selectable: SelectMode = SelectMode.None,
+  selected: Boolean = false,
   contentColor: Color,
   onClick: (T) -> Unit,
 ) {
   MenuItem(onClick = { onClick(id) }) {
     if (icon != null) {
       MenuItemIcon(icon = icon, tint = contentColor)
+      Space()
+    }
+    val selIcon = selectableIcon(selectable, selected, contentColor)
+    if (selIcon != null) {
+      MenuItemIcon(icon = selIcon, tint = contentColor)
       Space()
     }
     MenuItemText(

@@ -17,6 +17,15 @@ package io.androidpoet.dropdown
 
 import androidx.compose.ui.graphics.vector.ImageVector
 
+public enum class SelectMode {
+  /** Item is not selectable. */
+  None,
+  /** Single-select (radio button style). */
+  Single,
+  /** Multi-select (checkbox style). */
+  Multi,
+}
+
 @DslMarker
 public annotation class MenuDSL
 
@@ -37,6 +46,8 @@ public data class MenuItem<T : Any>(
   override val parent: MenuItem<T>? = null,
 ) : IMenuItem<T> {
   var icon: ImageVector? = null
+  var selectable: SelectMode = SelectMode.None
+  var selected: Boolean = false
   var children: MutableList<IMenuItem<T>>? = null // Note: Changed to IMenuItem
 
   public fun hasChildren(): Boolean = !children.isNullOrEmpty()
@@ -53,6 +64,11 @@ public class DropDownMenuBuilder<T : Any> {
 
   public fun icon(value: ImageVector) {
     menu.icon = value
+  }
+
+  public fun selectable(mode: SelectMode, selected: Boolean = false) {
+    menu.selectable = mode
+    menu.selected = selected
   }
 
   public fun horizontalDivider() {
