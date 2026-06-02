@@ -21,12 +21,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ContentCopy
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.ContentPaste
-import androidx.compose.material.icons.filled.FileOpen
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.FolderOpen
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
@@ -48,35 +47,32 @@ import androidx.compose.ui.window.rememberWindowState
 public fun main(): Unit = application {
   Window(
     onCloseRequest = ::exitApplication,
-    title = "Dropdown Cascade Demo",
-    state = rememberWindowState(width = 500.dp, height = 360.dp),
+    title = "Cascade Dropdown",
+    state = rememberWindowState(width = 460.dp, height = 300.dp),
   ) {
     MaterialTheme {
       Surface(modifier = Modifier.fillMaxSize()) {
-        SimpleCascadeDemo()
+        DropdownDemo()
       }
     }
   }
 }
 
 @Composable
-private fun SimpleCascadeDemo() {
+private fun DropdownDemo() {
   var isOpen by remember { mutableStateOf(false) }
   var selected by remember { mutableStateOf<String?>(null) }
 
   val menu = remember {
     dropDownMenu<String> {
       item("new", "New File") {
-        icon(Icons.Default.Add)
+        icon(Icons.Default.FolderOpen)
       }
-      item("open", "Open") {
-        icon(Icons.Default.FileOpen)
-        item("local", "From Local") {
-          icon(Icons.Default.Folder)
-        }
-        item("cloud", "From Cloud") {
-          icon(Icons.Default.FileOpen)
-        }
+      item("open", "Open Recent") {
+        icon(Icons.Default.Folder)
+        item("doc1", "Resume.pdf")
+        item("doc2", "Photo.png")
+        item("doc3", "Notes.txt")
       }
       horizontalDivider()
       item("save", "Save") {
@@ -97,7 +93,6 @@ private fun SimpleCascadeDemo() {
         icon(Icons.Default.Settings)
         item("general", "General")
         item("editor", "Editor") {
-          icon(Icons.Default.Settings)
           item("font", "Font")
           item("theme", "Theme")
         }
@@ -110,9 +105,9 @@ private fun SimpleCascadeDemo() {
     modifier = Modifier.fillMaxSize().padding(32.dp),
     horizontalAlignment = Alignment.CenterHorizontally,
   ) {
-    Text("Simple Cascade Menu", style = MaterialTheme.typography.headlineMedium)
+    Text("Cascade Dropdown", style = MaterialTheme.typography.headlineMedium)
     Text(
-      text = if (selected != null) "Selected: $selected" else "Click the button below",
+      text = if (selected != null) "Selected: $selected" else "",
       style = MaterialTheme.typography.bodyMedium,
       modifier = Modifier.padding(vertical = 16.dp),
     )
@@ -123,14 +118,11 @@ private fun SimpleCascadeDemo() {
       Dropdown(
         isOpen = isOpen,
         menu = menu,
-        offset = androidx.compose.ui.unit.DpOffset.Zero,
         onItemSelected = {
           selected = it?.toString()
           isOpen = false
         },
         onDismiss = { isOpen = false },
-        placement = MenuPlacement.Down,
-        width = 200.dp,
       )
     }
   }

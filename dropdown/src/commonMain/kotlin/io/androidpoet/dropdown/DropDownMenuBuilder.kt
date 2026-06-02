@@ -1,5 +1,5 @@
 /*
- * Designed and developed by 2024 androidpoet (Ranbir Singh)
+ * Designed and developed by 2022 androidpoet (Ranbir Singh)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,72 +15,26 @@
  */
 package io.androidpoet.dropdown
 
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
-
-public typealias MenuItemContent<T> = @Composable RowScope.() -> Unit
-
-/**
- * Defines the preferred placement of the dropdown menu relative to its anchor.
- */
-public enum class MenuPlacement {
-  /** Automatically detect best placement based on available space. */
-  Auto,
-  /** Place below the anchor (default). */
-  Down,
-  /** Place above the anchor. */
-  Up,
-  /** Place to the end (right in LTR, left in RTL). */
-  End,
-  /** Place to the start (left in LTR, right in RTL). */
-  Start,
-}
-
-/** Defines the selection mode for menu items. */
-public enum class SelectMode {
-  /** No selection indicators. */
-  None,
-  /** Single selection with radio buttons. */
-  Single,
-  /** Multi selection with checkboxes. */
-  Multi,
-}
 
 @DslMarker
 public annotation class MenuDSL
 
-// Create a sealed interface for menu items
-@MenuDSL
-public sealed interface IMenuItem<T : Any> {
-  public val parent: MenuItem<T>?
+/** Defines where the dropdown appears relative to its anchor. */
+public enum class MenuPlacement {
+  Down, Up, End, Start
 }
 
-// Represent a divider as a special menu item
-@MenuDSL
-public class Divider<T : Any>(override val parent: MenuItem<T>? = null) : IMenuItem<T>
-
-// Represent a section header as a special menu item
-@MenuDSL
-public class SectionHeaderItem<T : Any>(
-  public val title: String,
-  override val parent: MenuItem<T>? = null,
-) : IMenuItem<T>
+public sealed class MenuNode<T : Any>
 
 @MenuDSL
 public data class MenuItem<T : Any>(
   val id: T? = null,
   val title: String = "",
-  override val parent: MenuItem<T>? = null,
-  val enabled: Boolean = true,
-) : IMenuItem<T> {
+) : MenuNode<T>() {
   var icon: ImageVector? = null
-  var subtitle: String? = null
-  var badge: Int? = null
-  var selectable: SelectMode = SelectMode.None
-  var selected: Boolean = false
-  var customContent: (@Composable RowScope.() -> Unit)? = null
-  var children: MutableList<IMenuItem<T>>? = null
+  var children: MutableList<MenuNode<T>>? = null
+  var parent: MenuItem<T>? = null
 
   public fun hasChildren(): Boolean = !children.isNullOrEmpty()
 
@@ -91,6 +45,11 @@ public data class MenuItem<T : Any>(
 }
 
 @MenuDSL
+public class Divider<T : Any> : MenuNode<T>() {
+  public var parent: MenuItem<T>? = null
+}
+
+@MenuDSL
 public class DropDownMenuBuilder<T : Any> {
   public var menu: MenuItem<T> = MenuItem()
 
@@ -98,44 +57,20 @@ public class DropDownMenuBuilder<T : Any> {
     menu.icon = value
   }
 
-  public fun subtitle(value: String) {
-    menu.subtitle = value
-  }
-
-  public fun badge(count: Int) {
-    menu.badge = count
-  }
-
-  public fun content(content: @Composable RowScope.() -> Unit) {
-    menu.customContent = content
-  }
-
-  public fun selectable(mode: SelectMode, selected: Boolean = false) {
-    menu.selectable = mode
-    menu.selected = selected
-  }
-
   public fun horizontalDivider() {
-    if (menu.children == null) {
-      menu.children = mutableListOf()
-    }
-    menu.children?.add(Divider(menu))
-  }
-
-  public fun section(title: String) {
-    if (menu.children == null) {
-      menu.children = mutableListOf()
-    }
-    menu.children?.add(SectionHeaderItem(title, menu))
+    val divider = Divider<T>()
+    divider.parent = menu
+    if (menu.children == null) menu.children = mutableListOf()
+    menu.children?.add(divider)
   }
 
   public fun item(
     id: T,
     title: String,
-    enabled: Boolean = true,
     init: (DropDownMenuBuilder<T>.() -> Unit)? = null,
   ) {
-    val newItem = MenuItem<T>(id, title, menu, enabled)
+    val newItem = MenuItem<T>(id, title)
+    newItem.parent = menu
 
     init?.invoke(DropDownMenuBuilder<T>().apply { menu = newItem })
 
