@@ -65,6 +65,7 @@ public final class io/androidpoet/dropdown/DropDownMenuBuilderKt {
 
 public final class io/androidpoet/dropdown/DropDownMenuColors {
 	public static final field $stable I
+	public static final field Companion Lio/androidpoet/dropdown/DropDownMenuColors$Companion;
 	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-0d7_KjU ()J
 	public final fun component2-0d7_KjU ()J
@@ -75,6 +76,13 @@ public final class io/androidpoet/dropdown/DropDownMenuColors {
 	public final fun getContentColor-0d7_KjU ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/androidpoet/dropdown/DropDownMenuColors$Companion {
+	public final fun dark (Landroidx/compose/runtime/Composer;I)Lio/androidpoet/dropdown/DropDownMenuColors;
+	public final fun default (Landroidx/compose/runtime/Composer;I)Lio/androidpoet/dropdown/DropDownMenuColors;
+	public final fun minimal (Landroidx/compose/runtime/Composer;I)Lio/androidpoet/dropdown/DropDownMenuColors;
+	public final fun primary (Landroidx/compose/runtime/Composer;I)Lio/androidpoet/dropdown/DropDownMenuColors;
 }
 
 public final class io/androidpoet/dropdown/Easing : java/lang/Enum {
