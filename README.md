@@ -2,6 +2,8 @@
 
 <div align="center">
 
+<img src="art/logo.svg" width="800" alt="Dropdown">
+
 # Dropdown
 💧 A powerful and customizable Compose Multiplatform dropdown menu with cascade and animations.
 
