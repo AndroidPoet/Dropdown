@@ -15,6 +15,12 @@
  */
 package io.androidpoet.dropdown
 
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.TweenSpec
+import androidx.compose.animation.core.tween
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
+
 public data class AnimationProp(
   val enterDuration: Int,
   val exitDuration: Int,
@@ -22,3 +28,31 @@ public data class AnimationProp(
   val easing: Easing,
   val initialAlpha: Float = 0.92f,
 )
+
+internal fun getSizeAnimationSpec(animationProp: AnimationProp): TweenSpec<IntSize> =
+  tween(
+    durationMillis = animationProp.enterDuration,
+    delayMillis = animationProp.delay,
+    easing = getEasing(animationProp.easing),
+  )
+
+internal fun getExitAnimationSpec(animationProp: AnimationProp): TweenSpec<Float> =
+  tween(
+    durationMillis = animationProp.exitDuration,
+    delayMillis = animationProp.delay,
+    easing = getEasing(animationProp.easing),
+  )
+
+internal fun getExitOffsetAnimationSpec(animationProp: AnimationProp): FiniteAnimationSpec<IntOffset> =
+  tween(
+    durationMillis = animationProp.exitDuration,
+    delayMillis = animationProp.delay,
+    easing = getEasing(animationProp.easing),
+  )
+
+internal fun getExitSizeAnimationSpec(animationProp: AnimationProp): TweenSpec<IntSize> =
+  tween(
+    durationMillis = animationProp.exitDuration,
+    delayMillis = animationProp.delay,
+    easing = getEasing(animationProp.easing),
+  )

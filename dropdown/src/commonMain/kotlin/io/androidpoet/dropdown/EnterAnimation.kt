@@ -19,6 +19,9 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.core.FiniteAnimationSpec
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.slideIn
@@ -72,9 +75,12 @@ internal fun getEnterAnimation(
       EnterAnimation.SlideIn -> slideIn(offsetSpec) { IntOffset(it.width / 2, it.height / 2) }
       EnterAnimation.SlideInHorizontally -> slideInHorizontally(offsetSpec)
       EnterAnimation.SlideInVertically -> slideInVertically(offsetSpec)
-      EnterAnimation.ScaleIn, EnterAnimation.ExpandIn,
-      EnterAnimation.ExpandHorizontally, EnterAnimation.ExpandVertically,
-      -> scaleIn(spec)
+      EnterAnimation.ScaleIn -> scaleIn(spec)
+      EnterAnimation.ExpandIn -> expandIn(animationSpec = getSizeAnimationSpec(animationProp))
+      EnterAnimation.ExpandHorizontally ->
+        expandHorizontally(animationSpec = getSizeAnimationSpec(animationProp))
+      EnterAnimation.ExpandVertically ->
+        expandVertically(animationSpec = getSizeAnimationSpec(animationProp))
     }
 
   return if (enterAnimation in
