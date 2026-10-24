@@ -18,6 +18,9 @@ package io.androidpoet.dropdown
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.shrinkOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideOut
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
@@ -61,7 +64,7 @@ internal fun getExitAnimation(
       ExitAnimation.SharedAxisZBackward,
       ExitAnimation.ElevationScale,
       -> {
-        fadeOut(animationSpec = getAnimationSpec(animationProp))
+        fadeOut(animationSpec = getExitAnimationSpec(animationProp))
       }
 
       ExitAnimation.SlideOut -> {
@@ -69,30 +72,29 @@ internal fun getExitAnimation(
           targetOffset = {
             IntOffset(-it.width / 2, it.height / 2)
           },
-          animationSpec = getOffsetAnimationSpec(animationProp),
+          animationSpec = getExitOffsetAnimationSpec(animationProp),
         )
       }
 
       ExitAnimation.SlideOutHorizontally -> {
-        slideOutHorizontally(animationSpec = getOffsetAnimationSpec(animationProp))
+        slideOutHorizontally(animationSpec = getExitOffsetAnimationSpec(animationProp))
       }
 
       ExitAnimation.SlideOutVertically -> {
-        slideOutVertically(animationSpec = getOffsetAnimationSpec(animationProp))
+        slideOutVertically(animationSpec = getExitOffsetAnimationSpec(animationProp))
       }
 
-      ExitAnimation.ScaleOut,
-      ExitAnimation.ShrinkOut,
-      ExitAnimation.ShrinkHorizontally,
-      ExitAnimation.ShrinkVertically,
-      -> {
-        scaleOut(animationSpec = getAnimationSpec(animationProp))
-      }
+      ExitAnimation.ScaleOut -> scaleOut(animationSpec = getExitAnimationSpec(animationProp))
+      ExitAnimation.ShrinkOut -> shrinkOut(animationSpec = getExitSizeAnimationSpec(animationProp))
+      ExitAnimation.ShrinkHorizontally ->
+        shrinkHorizontally(animationSpec = getExitSizeAnimationSpec(animationProp))
+      ExitAnimation.ShrinkVertically ->
+        shrinkVertically(animationSpec = getExitSizeAnimationSpec(animationProp))
     }
 
   return when (exitAnimation) {
     ExitAnimation.SharedAxisZBackward, ExitAnimation.ElevationScale -> {
-      commonAnimation + scaleOut(animationSpec = getAnimationSpec(animationProp))
+      commonAnimation + scaleOut(animationSpec = getExitAnimationSpec(animationProp))
     }
 
     else -> commonAnimation
